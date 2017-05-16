@@ -90,21 +90,21 @@
 
 
 
-<meta name="description" content="作者：Syn良子 出处：https://cssdongl.github.io/2017/05/16/Pentaho%20Kettle%206.1%E8%BF%9E%E6%8E%A5CDH5.4.0%E9%9B%86%E7%BE%A4/ 转载请注明出处最近把之前写的Hadoop MapReduce程序又总结了下，发现很多逻辑基本都是大致相同的，于是想到能不能利用ETL工具来进行配置相关逻辑来实现Ma">
+<meta name="description" content="最近把之前写的Hadoop MapReduce程序又总结了下，发现很多逻辑基本都是大致相同的，于是想到能不能利用ETL工具来进行配置相关逻辑来实现MapReduce代码自动生成并执行,这样可以简化现有以及之后的一部分工作.于是选取了上手容易并对Hadoop支持的比较成熟的Pentaho Kettle来测试,把一些配置过程和遇到的坑记录下来. Kettle可以在官网下载到,但是官网会让你注册才能下载">
 <meta name="keywords" content="ETL,MapReduce">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Pentaho Kettle 6.1连接CDH5.4.0集群">
+<meta property="og:title" content="Pentaho Kettle 6.1连接CDH5.4.0集群(原)">
 <meta property="og:url" content="http://yoursite.com/2017/05/16/Pentaho Kettle 6.1连接CDH5.4.0集群/index.html">
 <meta property="og:site_name" content="Syn良子的博客">
-<meta property="og:description" content="作者：Syn良子 出处：https://cssdongl.github.io/2017/05/16/Pentaho%20Kettle%206.1%E8%BF%9E%E6%8E%A5CDH5.4.0%E9%9B%86%E7%BE%A4/ 转载请注明出处最近把之前写的Hadoop MapReduce程序又总结了下，发现很多逻辑基本都是大致相同的，于是想到能不能利用ETL工具来进行配置相关逻辑来实现Ma">
+<meta property="og:description" content="最近把之前写的Hadoop MapReduce程序又总结了下，发现很多逻辑基本都是大致相同的，于是想到能不能利用ETL工具来进行配置相关逻辑来实现MapReduce代码自动生成并执行,这样可以简化现有以及之后的一部分工作.于是选取了上手容易并对Hadoop支持的比较成熟的Pentaho Kettle来测试,把一些配置过程和遇到的坑记录下来. Kettle可以在官网下载到,但是官网会让你注册才能下载">
 <meta property="og:image" content="http://oq1iog0cp.bkt.clouddn.com/kettleConf1.png">
 <meta property="og:image" content="http://oq1iog0cp.bkt.clouddn.com/kettleConf2.png">
 <meta property="og:image" content="http://oq1iog0cp.bkt.clouddn.com/kettleConf3.png">
 <meta property="og:image" content="http://oq1iog0cp.bkt.clouddn.com/kettleConf4.png">
-<meta property="og:updated_time" content="2017-05-16T10:40:53.520Z">
+<meta property="og:updated_time" content="2017-05-16T10:44:38.926Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Pentaho Kettle 6.1连接CDH5.4.0集群">
-<meta name="twitter:description" content="作者：Syn良子 出处：https://cssdongl.github.io/2017/05/16/Pentaho%20Kettle%206.1%E8%BF%9E%E6%8E%A5CDH5.4.0%E9%9B%86%E7%BE%A4/ 转载请注明出处最近把之前写的Hadoop MapReduce程序又总结了下，发现很多逻辑基本都是大致相同的，于是想到能不能利用ETL工具来进行配置相关逻辑来实现Ma">
+<meta name="twitter:title" content="Pentaho Kettle 6.1连接CDH5.4.0集群(原)">
+<meta name="twitter:description" content="最近把之前写的Hadoop MapReduce程序又总结了下，发现很多逻辑基本都是大致相同的，于是想到能不能利用ETL工具来进行配置相关逻辑来实现MapReduce代码自动生成并执行,这样可以简化现有以及之后的一部分工作.于是选取了上手容易并对Hadoop支持的比较成熟的Pentaho Kettle来测试,把一些配置过程和遇到的坑记录下来. Kettle可以在官网下载到,但是官网会让你注册才能下载">
 <meta name="twitter:image" content="http://oq1iog0cp.bkt.clouddn.com/kettleConf1.png">
 
 
@@ -139,7 +139,7 @@
 
 
 
-  <title>Pentaho Kettle 6.1连接CDH5.4.0集群 | Syn良子的博客</title>
+  <title>Pentaho Kettle 6.1连接CDH5.4.0集群(原) | Syn良子的博客</title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -286,7 +286,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Pentaho Kettle 6.1连接CDH5.4.0集群</h1>
+          <h1 class="post-title" itemprop="name headline">Pentaho Kettle 6.1连接CDH5.4.0集群(原)</h1>
         
 
         <div class="post-meta">
@@ -355,7 +355,7 @@
       
 
       
-        <p>作者：Syn良子 出处：<a href="https://cssdongl.github.io/2017/05/16/Pentaho%20Kettle%206.1%E8%BF%9E%E6%8E%A5CDH5.4.0%E9%9B%86%E7%BE%A4/" target="_blank" rel="external">https://cssdongl.github.io/2017/05/16/Pentaho%20Kettle%206.1%E8%BF%9E%E6%8E%A5CDH5.4.0%E9%9B%86%E7%BE%A4/</a> 转载请注明出处<br>最近把之前写的Hadoop MapReduce程序又总结了下，发现很多逻辑基本都是大致相同的，于是想到能不能利用ETL工具来进行配置相关逻辑来实现MapReduce代码自动生成并执行,这样可以简化现有以及之后的一部分工作.于是选取了上手容易并对Hadoop支持的比较成熟的Pentaho Kettle来测试,把一些配置过程和遇到的坑记录下来.</p>
+        <p>最近把之前写的Hadoop MapReduce程序又总结了下，发现很多逻辑基本都是大致相同的，于是想到能不能利用ETL工具来进行配置相关逻辑来实现MapReduce代码自动生成并执行,这样可以简化现有以及之后的一部分工作.于是选取了上手容易并对Hadoop支持的比较成熟的Pentaho Kettle来测试,把一些配置过程和遇到的坑记录下来.</p>
 <p>Kettle可以在官网下载到,但是官网会让你注册才能下载而且速度不稳定，所以推荐在<a href="https://sourceforge.net/projects/pentaho/files/Data%20Integration/" target="_blank" rel="external">这个链接</a>进行下载，各个版本都有，<br>我用的是PDI(Pentaho Data Integration)6.1,需要连接的集群是Hadoop2.6.0-CDH5.4.0.进入链接里的6.1文件夹直接下载pdi-ce-6.1.0.1-196.zip解压，进入data-integration根目录启动Spoon.bat，等待kettle启动成功.</p>
 <h1 id="一-准备工作"><a href="#一-准备工作" class="headerlink" title="一.准备工作"></a>一.准备工作</h1><p>在配置PDI连接Bigdata source之前，需要检查下需要连接的source版本和对应的Pentaho的组件是否兼容，如下图</p>
 <p><img src="http://oq1iog0cp.bkt.clouddn.com/kettleConf1.png" alt="PDI组件列表"></p>

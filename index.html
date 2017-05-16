@@ -280,7 +280,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2017/05/16/Pentaho Kettle 6.1连接CDH5.4.0集群/" itemprop="url">Pentaho Kettle 6.1连接CDH5.4.0集群</a></h1>
+                <a class="post-title-link" href="/2017/05/16/Pentaho Kettle 6.1连接CDH5.4.0集群/" itemprop="url">Pentaho Kettle 6.1连接CDH5.4.0集群(原)</a></h1>
         
 
         <div class="post-meta">
@@ -351,12 +351,12 @@
       
         
           
-          作者：Syn良子 出处：https://cssdongl.github.io/2017/05/16/Pentaho%20Kettle%206.1%E8%BF%9E%E6%8E%A5CDH5.4.0%E9%9B%86%E7%BE%A4/ 转载请注明出处最近把之前写的Hadoop MapReduce程序又总结了下，发现很多逻辑基本都是大致相同的，于是想到能不能利用ETL工具来进行配置相关逻辑来实现MapReduce代码自动生成并执行,这样可以简化现有以及之后的一部分工作.于是选取了上手容易并对Hadoop支持的比较成熟的Pentaho Kettle来测试,把一些配置过程和遇到的坑记录下来.
+          最近把之前写的Hadoop MapReduce程序又总结了下，发现很多逻辑基本都是大致相同的，于是想到能不能利用ETL工具来进行配置相关逻辑来实现MapReduce代码自动生成并执行,这样可以简化现有以及之后的一部分工作.于是选取了上手容易并对Hadoop支持的比较成熟的Pentaho Kettle来测试,把一些配置过程和遇到的坑记录下来.
 Kettle可以在官网下载到,但是官网会让你注册才能下载而且速度不稳定，所以推荐在这个链接进行下载，各个版本都有，我用的是PDI(Pentaho Data Integration)6.1,需要连接的集群是Hadoop2.6.0-CDH5.4.0.进入链接里的6.1文件夹直接下载pdi-ce-6.1.0.1-196.zip解压，进入data-integration根目录启动Spoon.bat，等待kettle启动成功.
 一.准备工作在配置PDI连接Bigdata source之前，需要检查下需要连接的source版本和对应的Pentaho的组件是否兼容，如下图
 
 可以看到，之前下载的PDI(上表中属于PDI Spoon),基本上是支持连接CDH,MapR,EMR,HDP等主流数据源的.我连接的集群是CDH5.4，也在支持范围内.
-二.配置Pentaho组件ShimsShims这里我的理解是Pent
+二.配置Pentaho组件ShimsShims这里我的理解是Pentaho提供的一系列连接各个source的适配器,具体配置位置根据Pentaho的组件来决定，现在的PDI Spoon的配置位置在../data-integration/plugins/pentaho-big-data-plugin/hadoop-co
           ...
           <!--noindex-->
           <div class="post-button text-center">
