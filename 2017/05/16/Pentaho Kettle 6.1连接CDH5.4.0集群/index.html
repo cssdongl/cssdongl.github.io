@@ -74,7 +74,7 @@
 <link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="前端," />
+  <meta name="keywords" content="ETL,MapReduce," />
 
 
 
@@ -90,17 +90,22 @@
 
 
 
-<meta name="description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick">
-<meta name="keywords" content="前端">
+<meta name="description" content="最近把之前写的Hadoop MapReduce程序又总结了下，发现很多逻辑基本都是大致相同的，于是想到能不能利用ETL工具来进行配置相关逻辑来实现MapReduce代码自动生成并执行,这样可以简化现有以及之后的一部分工作.于是选取了上手容易并对Hadoop支持的比较成熟的Pentaho Kettle来测试,把一些配置过程和遇到的坑记录下来. Kettle可以在官网下载到,但是官网会让你注册才能下载">
+<meta name="keywords" content="ETL,MapReduce">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Hello Hexo">
-<meta property="og:url" content="http://yoursite.com/2017/05/16/hello-world/index.html">
+<meta property="og:title" content="Pentaho Kettle 6.1连接CDH5.4.0集群">
+<meta property="og:url" content="http://yoursite.com/2017/05/16/Pentaho Kettle 6.1连接CDH5.4.0集群/index.html">
 <meta property="og:site_name" content="Syn良子的博客">
-<meta property="og:description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick">
-<meta property="og:updated_time" content="2017-05-16T08:12:57.656Z">
+<meta property="og:description" content="最近把之前写的Hadoop MapReduce程序又总结了下，发现很多逻辑基本都是大致相同的，于是想到能不能利用ETL工具来进行配置相关逻辑来实现MapReduce代码自动生成并执行,这样可以简化现有以及之后的一部分工作.于是选取了上手容易并对Hadoop支持的比较成熟的Pentaho Kettle来测试,把一些配置过程和遇到的坑记录下来. Kettle可以在官网下载到,但是官网会让你注册才能下载">
+<meta property="og:image" content="http://oq1iog0cp.bkt.clouddn.com/kettleConf1.png">
+<meta property="og:image" content="http://oq1iog0cp.bkt.clouddn.com/kettleConf2.png">
+<meta property="og:image" content="http://oq1iog0cp.bkt.clouddn.com/kettleConf3.png">
+<meta property="og:image" content="http://oq1iog0cp.bkt.clouddn.com/kettleConf4.png">
+<meta property="og:updated_time" content="2017-05-16T10:29:14.517Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Hello Hexo">
-<meta name="twitter:description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick">
+<meta name="twitter:title" content="Pentaho Kettle 6.1连接CDH5.4.0集群">
+<meta name="twitter:description" content="最近把之前写的Hadoop MapReduce程序又总结了下，发现很多逻辑基本都是大致相同的，于是想到能不能利用ETL工具来进行配置相关逻辑来实现MapReduce代码自动生成并执行,这样可以简化现有以及之后的一部分工作.于是选取了上手容易并对Hadoop支持的比较成熟的Pentaho Kettle来测试,把一些配置过程和遇到的坑记录下来. Kettle可以在官网下载到,但是官网会让你注册才能下载">
+<meta name="twitter:image" content="http://oq1iog0cp.bkt.clouddn.com/kettleConf1.png">
 
 
 
@@ -128,13 +133,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2017/05/16/hello-world/"/>
+  <link rel="canonical" href="http://yoursite.com/2017/05/16/Pentaho Kettle 6.1连接CDH5.4.0集群/"/>
 
 
 
 
 
-  <title>Hello Hexo | Syn良子的博客</title>
+  <title>Pentaho Kettle 6.1连接CDH5.4.0集群 | Syn良子的博客</title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -264,7 +269,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/05/16/hello-world/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/05/16/Pentaho Kettle 6.1连接CDH5.4.0集群/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="cssdongl">
@@ -281,7 +286,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Hello Hexo</h1>
+          <h1 class="post-title" itemprop="name headline">Pentaho Kettle 6.1连接CDH5.4.0集群</h1>
         
 
         <div class="post-meta">
@@ -293,7 +298,7 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-05-16T11:39:29+08:00">
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-05-16T17:41:54+08:00">
                 2017-05-16
               </time>
             
@@ -316,8 +321,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/前端/" itemprop="url" rel="index">
-                    <span itemprop="name">前端</span>
+                  <a href="/categories/ETL/" itemprop="url" rel="index">
+                    <span itemprop="name">ETL</span>
                   </a>
                 </span>
 
@@ -350,15 +355,53 @@
       
 
       
-        <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="external">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="external">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="external">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo new <span class="string">"My New Post"</span></div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="external">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo server</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="external">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo generate</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="external">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo deploy</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="external">Deployment</a></p>
+        <p>最近把之前写的Hadoop MapReduce程序又总结了下，发现很多逻辑基本都是大致相同的，于是想到能不能利用ETL工具来进行配置相关逻辑来实现MapReduce代码自动生成并执行,这样可以简化现有以及之后的一部分工作.于是选取了上手容易并对Hadoop支持的比较成熟的Pentaho Kettle来测试,把一些配置过程和遇到的坑记录下来.</p>
+<p>Kettle可以在官网下载到,但是官网会让你注册才能下载而且速度不稳定，所以推荐在<a href="https://sourceforge.net/projects/pentaho/files/Data%20Integration/" target="_blank" rel="external">这个链接</a>进行下载，各个版本都有，<br>我用的是PDI(Pentaho Data Integration)6.1,需要连接的集群是Hadoop2.6.0-CDH5.4.0.进入链接里的6.1文件夹直接下载pdi-ce-6.1.0.1-196.zip解压，进入data-integration根目录启动Spoon.bat，等待kettle启动成功.</p>
+<h1 id="一-准备工作"><a href="#一-准备工作" class="headerlink" title="一.准备工作"></a>一.准备工作</h1><p>在配置PDI连接Bigdata source之前，需要检查下需要连接的source版本和对应的Pentaho的组件是否兼容，如下图</p>
+<p><img src="http://oq1iog0cp.bkt.clouddn.com/kettleConf1.png" alt="PDI组件列表"></p>
+<p>可以看到，之前下载的PDI(上表中属于PDI Spoon),基本上是支持连接CDH,MapR,EMR,HDP等主流数据源的.我连接的集群是CDH5.4，也在支持范围内.</p>
+<h1 id="二-配置Pentaho组件Shims"><a href="#二-配置Pentaho组件Shims" class="headerlink" title="二.配置Pentaho组件Shims"></a>二.配置Pentaho组件Shims</h1><p>Shims这里我的理解是Pentaho提供的一系列连接各个source的适配器,具体配置位置根据Pentaho的组件来决定，现在的PDI Spoon的配置位置在../data-integration/plugins/pentaho-big-data-plugin/hadoop-configurations 下，注意这个地方要配置好对应数据源的shims,如下图有好几种数据源.<br><img src="http://oq1iog0cp.bkt.clouddn.com/kettleConf2.png" alt=""></p>
+<p>比如我当前连接的是CDH5.4.0,那么我先清空cdh55下的内容,随后下载对应的shims来解压拷贝到该目录下,具体shims<a href="https://sourceforge.net/projects/pentaho/files/Big%20Data%20Shims" title="下载位置" target="_blank" rel="external">下载位置</a><br>选择相应的PDI版本进入，下载对应的CDH版本的shims,我需要下载的是 pentaho-hadoop-shims-cdh54-package-61.2016.04.01-196-dist.zip,打开该zip,双击install.bat进行shims解压，将解压后的cdh54目录下的内容全部拷贝到hadoop-configurations下的默认的cdh55文件下里面去(其实cdh55这个应该可以改名为cdh54,但是修改完这个文件夹名称的话，PDI找不到该配置了，应该可以在哪儿设置，暂时没找到,找到的同学可以告诉我).<br><strong><br>这个地方一定要下载好对应的shims，否则PDI中即使你配置好正确的CDH连接信息，那么随后在使用过程中也会报各种莫名其妙的错误.</strong></p>
+<h1 id="三-编辑Cluster配置文件"><a href="#三-编辑Cluster配置文件" class="headerlink" title="三.编辑Cluster配置文件"></a>三.编辑Cluster配置文件</h1><p>完成上一步内容后，进入cdh55目录下,将CDH5.4集群上的hive-site.xml,mapred-site.xml,hbase-site.xml,core-site.xml,hdfs-site.xml,yarn-site.xml等配置文件拷贝到当前目录覆盖.然后进行一些必要的修改.如下<br>修改hive-site.xml,将hive的metastore修改为和集群保持一致</p>
+<p><code>&lt;property&gt;
+    &lt;name&gt;hive.metastore.uris&lt;/name&gt;
+    &lt;value&gt;修改为集群的thrift地址&lt;/value&gt;
+&lt;/property&gt;</code>  </p>
+<p>修改mapred-site.xm,如没有则添加并和集群保持一致</p>
+<pre><code>&lt;property&gt;
+&lt;name&gt;mapreduce.jobhistory.address&lt;/name&gt;
+&lt;value&gt;修改为集群的jobhistory地址&lt;/value&gt;
+&lt;/property&gt;
+&lt;property&gt;
+&lt;name&gt;mapreduce.app-submission.cross-platform&lt;/name&gt;
+&lt;value&gt;true&lt;/value&gt;
+    &lt;/property&gt;
+</code></pre><p>修改yarn-site.xml对应属性值，如没有则添加并和集群保持一致</p>
+<pre><code>&lt;property&gt;
+&lt;name&gt;yarn.application.classpath&lt;/name&gt;
+ &lt;value&gt;$HADOOP_CLIENT_CONF_DIR,$HADOOP_CONF_DIR,$HADOOP_COMMON_HOME/*,$HADOOP_COMMON_HOME/lib/*,$HADOOP_HDFS_HOME/*,$HADOOP_HDFS_HOME/lib/*,$HADOOP_YARN_HOME/*,$HADOOP_YARN_HOME/lib/*&lt;/value&gt;
+&lt;/property&gt;
+&lt;property&gt;
+&lt;name&gt;yarn.resourcemanager.hostname&lt;/name&gt;
+&lt;value&gt;clouderamanager.cdh5.test&lt;/value&gt;
+&lt;/property&gt;
+&lt;property&gt;
+&lt;name&gt;yarn.resourcemanager.address&lt;/name&gt;
+&lt;value&gt;clouderamanager.cdh5.test:8032&lt;/value&gt;
+&lt;/property&gt;
+&lt;property&gt;
+&lt;name&gt;yarn.resourcemanager.admin.address&lt;/name&gt;
+&lt;value&gt;clouderamanager.cdh5.test:8033&lt;/value&gt;
+&lt;/property&gt;
+</code></pre><p>修改config.properties添加如下属性,注意我这里CDH5.4测试用，没有开启Kerberos认证</p>
+<p>authentication.superuser.provider=NO_AUTH</p>
+<p>如果开启了Kerberos认证，则需要修改更多参数.</p>
+<h1 id="四-新建Cluster连接并测试"><a href="#四-新建Cluster连接并测试" class="headerlink" title="四.新建Cluster连接并测试"></a>四.新建Cluster连接并测试</h1><p>完成上述配置后，启动Spoon.bat, 进入PDI开发界面.菜单栏中选择Tools-&gt;Hadoop Distribution,然后选择Cloudera CDH5.4并点击ok,然后重启PDI.　　</p>
+<p>在左边的View视图下会看到Hadoop clusters然后右键新建Cluster,如下图</p>
+<p><img src="http://oq1iog0cp.bkt.clouddn.com/kettleConf3.png" alt=""></p>
+<p>配置好对应的集群连接信息(可以参考shims下集群的*.xml配置文件)，点击”Test”进行测试，如下</p>
+<p><img src="http://oq1iog0cp.bkt.clouddn.com/kettleConf4.png" alt=""></p>
+<p>确保所有的结果都变为绿色则表示配置成功,如果有红色肯定是连接信息和集群不一致.</p>
 
       
     </div>
@@ -388,7 +431,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/前端/" rel="tag"># 前端</a>
+            <a href="/tags/ETL/" rel="tag"># ETL</a>
+          
+            <a href="/tags/MapReduce/" rel="tag"># MapReduce</a>
           
         </div>
       
@@ -401,15 +446,15 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
+              <a href="/2017/05/16/blogTransfer/" rel="next" title="博客迁移">
+                <i class="fa fa-chevron-left"></i> 博客迁移
+              </a>
+            
           </div>
 
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/05/16/blogTransfer/" rel="prev" title="博客迁移">
-                博客迁移 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -538,7 +583,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Quick-Start"><span class="nav-number">1.</span> <span class="nav-text">Quick Start</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Create-a-new-post"><span class="nav-number">1.1.</span> <span class="nav-text">Create a new post</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Run-server"><span class="nav-number">1.2.</span> <span class="nav-text">Run server</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Generate-static-files"><span class="nav-number">1.3.</span> <span class="nav-text">Generate static files</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Deploy-to-remote-sites"><span class="nav-number">1.4.</span> <span class="nav-text">Deploy to remote sites</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#一-准备工作"><span class="nav-number">1.</span> <span class="nav-text">一.准备工作</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#二-配置Pentaho组件Shims"><span class="nav-number">2.</span> <span class="nav-text">二.配置Pentaho组件Shims</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#三-编辑Cluster配置文件"><span class="nav-number">3.</span> <span class="nav-text">三.编辑Cluster配置文件</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#四-新建Cluster连接并测试"><span class="nav-number">4.</span> <span class="nav-text">四.新建Cluster连接并测试</span></a></li></ol></div>
             
 
           </div>
