@@ -332,6 +332,16 @@
 
           
             
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a class="cloud-tie-join-count" href="/2017/05/17/Hive的静态分区和动态分区/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count join-count" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
           
 
           
@@ -489,7 +499,7 @@ FROM original_device_open where original_device_open.year=&apos;2017&apos; and o
           
   <div class="comments" id="comments">
     
-      <div id="uyan_frame"></div>
+      <div id="cloud-tie-wrapper" class="cloud-tie-wrapper"></div>
     
   </div>
 
@@ -722,27 +732,21 @@ FROM original_device_open where original_device_open.year=&apos;2017&apos; and o
 
 
   
-
-
-
-
-
-  
     
-
-    
-      <!-- UY BEGIN -->
-      <div id="uyan_frame"></div>
-      <script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2133794"></script>
-      <!-- UY END -->
-    
+    <script>
+      var cloudTieConfig = {
+        url: document.location.href, 
+        sourceId: "",
+        productKey: "d8ae2cdf33364d40a5d78bb4681070d0",
+        target: "cloud-tie-wrapper"
+      };
+    </script>
+    <script src="https://img1.ws.126.net/f2e/tie/yun/sdk/loader.js"></script>
   
 
 
 
 
-
-  
 
 
 

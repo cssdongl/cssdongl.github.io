@@ -74,7 +74,7 @@
 <link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Hbase,Spark,MapReduce," />
+  <meta name="keywords" content="Hbase,MapReduce,Spark," />
 
 
 
@@ -91,7 +91,7 @@
 
 
 <meta name="description" content="迁移前地址:http://www.cnblogs.com/cssdongl/p/6227195.html 大家都知道用mapreduce或者spark写入已知的hbase中的表时，直接在mapreduce或者spark的driver class中声明如下代码 job.getConfiguration().set(TableOutputFormat.OUTPUT_TABLE, tablename);">
-<meta name="keywords" content="Hbase,Spark,MapReduce">
+<meta name="keywords" content="Hbase,MapReduce,Spark">
 <meta property="og:type" content="article">
 <meta property="og:title" content="MapReduce和Spark写入Hbase多表总结(原)">
 <meta property="og:url" content="http://yoursite.com/2017/05/17/MapReduce和Spark写入Hbase多表总结/index.html">
@@ -340,6 +340,16 @@
 
           
             
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a class="cloud-tie-join-count" href="/2017/05/17/MapReduce和Spark写入Hbase多表总结/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count join-count" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
           
 
           
@@ -489,9 +499,9 @@
           
             <a href="/tags/Hbase/" rel="tag"># Hbase</a>
           
-            <a href="/tags/Spark/" rel="tag"># Spark</a>
-          
             <a href="/tags/MapReduce/" rel="tag"># MapReduce</a>
+          
+            <a href="/tags/Spark/" rel="tag"># Spark</a>
           
         </div>
       
@@ -542,7 +552,7 @@
           
   <div class="comments" id="comments">
     
-      <div id="uyan_frame"></div>
+      <div id="cloud-tie-wrapper" class="cloud-tie-wrapper"></div>
     
   </div>
 
@@ -775,27 +785,21 @@
 
 
   
-
-
-
-
-
-  
     
-
-    
-      <!-- UY BEGIN -->
-      <div id="uyan_frame"></div>
-      <script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2133794"></script>
-      <!-- UY END -->
-    
+    <script>
+      var cloudTieConfig = {
+        url: document.location.href, 
+        sourceId: "",
+        productKey: "d8ae2cdf33364d40a5d78bb4681070d0",
+        target: "cloud-tie-wrapper"
+      };
+    </script>
+    <script src="https://img1.ws.126.net/f2e/tie/yun/sdk/loader.js"></script>
   
 
 
 
 
-
-  
 
 
 
