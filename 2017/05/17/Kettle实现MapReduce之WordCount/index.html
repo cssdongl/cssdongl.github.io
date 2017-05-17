@@ -74,7 +74,7 @@
 <link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Hexo,Tips," />
+  <meta name="keywords" content="Kettle,MapReduce,Hadoop," />
 
 
 
@@ -90,17 +90,21 @@
 
 
 
-<meta name="description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick">
-<meta name="keywords" content="Hexo,Tips">
+<meta name="description" content="迁移前地址:http://www.cnblogs.com/cssdongl/p/6019439.html抽空用kettle配置了一个Mapreduce的Word count,发现还是很方便快捷的，废话不多说，进入正题. 创建Mapper转换如下图,mapper读取hdfs输入，进行word的切分，输出每个word和整数常量值   MapReduce Input:Mapper输入,读取HDFS上的输">
+<meta name="keywords" content="Kettle,MapReduce,Hadoop">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Hello Hexo">
-<meta property="og:url" content="http://yoursite.com/2017/05/16/hello-world/index.html">
+<meta property="og:title" content="Kettle实现MapReduce之WordCount(原)">
+<meta property="og:url" content="http://yoursite.com/2017/05/17/Kettle实现MapReduce之WordCount/index.html">
 <meta property="og:site_name" content="Syn良子的博客">
-<meta property="og:description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick">
-<meta property="og:updated_time" content="2017-05-17T02:36:38.404Z">
+<meta property="og:description" content="迁移前地址:http://www.cnblogs.com/cssdongl/p/6019439.html抽空用kettle配置了一个Mapreduce的Word count,发现还是很方便快捷的，废话不多说，进入正题. 创建Mapper转换如下图,mapper读取hdfs输入，进行word的切分，输出每个word和整数常量值   MapReduce Input:Mapper输入,读取HDFS上的输">
+<meta property="og:image" content="http://oq1iog0cp.bkt.clouddn.com/kettleMr1.png">
+<meta property="og:image" content="http://oq1iog0cp.bkt.clouddn.com/kettleMr2.png">
+<meta property="og:image" content="http://oq1iog0cp.bkt.clouddn.com/kettleMr3.png">
+<meta property="og:updated_time" content="2017-05-17T03:53:42.012Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Hello Hexo">
-<meta name="twitter:description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick">
+<meta name="twitter:title" content="Kettle实现MapReduce之WordCount(原)">
+<meta name="twitter:description" content="迁移前地址:http://www.cnblogs.com/cssdongl/p/6019439.html抽空用kettle配置了一个Mapreduce的Word count,发现还是很方便快捷的，废话不多说，进入正题. 创建Mapper转换如下图,mapper读取hdfs输入，进行word的切分，输出每个word和整数常量值   MapReduce Input:Mapper输入,读取HDFS上的输">
+<meta name="twitter:image" content="http://oq1iog0cp.bkt.clouddn.com/kettleMr1.png">
 
 
 
@@ -128,13 +132,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2017/05/16/hello-world/"/>
+  <link rel="canonical" href="http://yoursite.com/2017/05/17/Kettle实现MapReduce之WordCount/"/>
 
 
 
 
 
-  <title>Hello Hexo | Syn良子的博客</title>
+  <title>Kettle实现MapReduce之WordCount(原) | Syn良子的博客</title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -264,7 +268,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/05/16/hello-world/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/05/17/Kettle实现MapReduce之WordCount/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="cssdongl">
@@ -281,7 +285,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Hello Hexo</h1>
+          <h1 class="post-title" itemprop="name headline">Kettle实现MapReduce之WordCount(原)</h1>
         
 
         <div class="post-meta">
@@ -293,8 +297,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-05-16T18:00:04+08:00">
-                2017-05-16
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-05-17T12:00:04+08:00">
+                2017-05-17
               </time>
             
 
@@ -316,8 +320,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Blogs/" itemprop="url" rel="index">
-                    <span itemprop="name">Blogs</span>
+                  <a href="/categories/Hadoop/" itemprop="url" rel="index">
+                    <span itemprop="name">Hadoop</span>
                   </a>
                 </span>
 
@@ -333,7 +337,7 @@
 
           
           
-             <span id="/2017/05/16/hello-world/" class="leancloud_visitors" data-flag-title="Hello Hexo">
+             <span id="/2017/05/17/Kettle实现MapReduce之WordCount/" class="leancloud_visitors" data-flag-title="Kettle实现MapReduce之WordCount(原)">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -361,15 +365,31 @@
       
 
       
-        <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="external">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="external">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="external">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo new <span class="string">"My New Post"</span></div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="external">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo server</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="external">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo generate</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="external">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo deploy</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="external">Deployment</a></p>
+        <p>迁移前地址:<a href="http://www.cnblogs.com/cssdongl/p/6019439.html" target="_blank" rel="external">http://www.cnblogs.com/cssdongl/p/6019439.html</a><br>抽空用kettle配置了一个Mapreduce的Word count,发现还是很方便快捷的，废话不多说，进入正题.</p>
+<h1 id="创建Mapper转换"><a href="#创建Mapper转换" class="headerlink" title="创建Mapper转换"></a>创建Mapper转换</h1><p>如下图,mapper读取hdfs输入，进行word的切分，输出每个word和整数常量值</p>
+<p><img src="http://oq1iog0cp.bkt.clouddn.com/kettleMr1.png" alt=""></p>
+<ol>
+<li>MapReduce Input:Mapper输入,读取HDFS上的输入文件内容以键值对存储;</li>
+<li>Spit filed to rows:读取value值以分隔符 “|”  进行切分(注意我这里hdfs文件中的word是以”|”隔开的)</li>
+<li>Add constants:给每次出现的word追加一个常量字段mapValue，值为整数1.</li>
+<li>MapReduce Output:Mapper输出，key为每个word,这里为mapKey,value为常量值mapValue.</li>
+</ol>
+<h1 id="创建Reducer转换"><a href="#创建Reducer转换" class="headerlink" title="创建Reducer转换"></a>创建Reducer转换</h1><p>如下图,Reducer读取mapper的输出.按照每个key值进行分组，对相应的常量值字段进行聚合,这里是做sum,然后最终输出到hdfs文件中去.</p>
+<p><img src="http://oq1iog0cp.bkt.clouddn.com/kettleMr2.png" alt=""></p>
+<ol>
+<li>MapReduce input:读取Mapper中的输出作为Reducer的输入</li>
+<li>GroupByKey:按照key进行分组(这里key是每个word), 然后对value进行聚合sum,求出每个word出现的总次数;</li>
+<li>MapReduce Output:最终的键值对，每行以&lt;单词，总次数&gt;来输出到hdfs上去.</li>
+</ol>
+<h1 id="创建MapReduce-Job"><a href="#创建MapReduce-Job" class="headerlink" title="创建MapReduce Job"></a>创建MapReduce Job</h1><p>创建最终的MapReduce Job,配置相应参数，调用Mapper和Reducer,见下图</p>
+<p><img src="http://oq1iog0cp.bkt.clouddn.com/kettleMr3.png" alt=""></p>
+<ol>
+<li>START:表示job的开始</li>
+<li>SetMRVariables:组件是set variables,用于设置一些MapReduce执行所需要的参数的全局变量值,如hdfs input path等;</li>
+<li>MapReduceWordCount:组件是Pentaho MapReduce组件，用来配置需要调用的Mapper和Reducer以及集群相关信息.</li>
+</ol>
+<p>以上配置好以后执行MapReduce Job，会提交至Hadoop集群并运行成功，如上图，可以同时看到MapReduce的执行进度。</p>
+<p>鉴于kettle能对字段做各种切分，组合以及正则等处理，还可以自定义java class,所以基本的MR程序都可以快速配置出来.<br>以上配置的Job下载链接:<a href="http://files.cnblogs.com/files/cssdongl/MRJobTest.7z" target="_blank" rel="external">http://files.cnblogs.com/files/cssdongl/MRJobTest.7z</a><br>参考资料:<a href="http://wiki.pentaho.com/display/BAD/Understanding+How+Pentaho+works+with+Hadoop" target="_blank" rel="external">http://wiki.pentaho.com/display/BAD/Understanding+How+Pentaho+works+with+Hadoop</a></p>
 
       
     </div>
@@ -399,9 +419,11 @@
       
         <div class="post-tags">
           
-            <a href="/tags/Hexo/" rel="tag"># Hexo</a>
+            <a href="/tags/Kettle/" rel="tag"># Kettle</a>
           
-            <a href="/tags/Tips/" rel="tag"># Tips</a>
+            <a href="/tags/MapReduce/" rel="tag"># MapReduce</a>
+          
+            <a href="/tags/Hadoop/" rel="tag"># Hadoop</a>
           
         </div>
       
@@ -414,15 +436,15 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
+              <a href="/2017/05/16/Pentaho Kettle 6.1连接CDH5.4.0集群/" rel="next" title="Pentaho Kettle 6.1连接CDH5.4.0集群(原)">
+                <i class="fa fa-chevron-left"></i> Pentaho Kettle 6.1连接CDH5.4.0集群(原)
+              </a>
+            
           </div>
 
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/05/16/blogTransfer/" rel="prev" title="博客迁移">
-                博客迁移 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -553,7 +575,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Quick-Start"><span class="nav-number">1.</span> <span class="nav-text">Quick Start</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Create-a-new-post"><span class="nav-number">1.1.</span> <span class="nav-text">Create a new post</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Run-server"><span class="nav-number">1.2.</span> <span class="nav-text">Run server</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Generate-static-files"><span class="nav-number">1.3.</span> <span class="nav-text">Generate static files</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Deploy-to-remote-sites"><span class="nav-number">1.4.</span> <span class="nav-text">Deploy to remote sites</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#创建Mapper转换"><span class="nav-number">1.</span> <span class="nav-text">创建Mapper转换</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#创建Reducer转换"><span class="nav-number">2.</span> <span class="nav-text">创建Reducer转换</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#创建MapReduce-Job"><span class="nav-number">3.</span> <span class="nav-text">创建MapReduce Job</span></a></li></ol></div>
             
 
           </div>

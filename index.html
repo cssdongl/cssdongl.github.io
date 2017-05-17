@@ -261,6 +261,173 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/05/17/Kettle实现MapReduce之WordCount/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="cssdongl">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://oq1iog0cp.bkt.clouddn.com/shiwanyin.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Syn良子的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/05/17/Kettle实现MapReduce之WordCount/" itemprop="url">Kettle实现MapReduce之WordCount(原)</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-05-17T12:00:04+08:00">
+                2017-05-17
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Hadoop/" itemprop="url" rel="index">
+                    <span itemprop="name">Hadoop</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2017/05/17/Kettle实现MapReduce之WordCount/" class="leancloud_visitors" data-flag-title="Kettle实现MapReduce之WordCount(原)">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+          迁移前地址:http://www.cnblogs.com/cssdongl/p/6019439.html抽空用kettle配置了一个Mapreduce的Word count,发现还是很方便快捷的，废话不多说，进入正题.
+创建Mapper转换如下图,mapper读取hdfs输入，进行word的切分，输出每个word和整数常量值
+
+
+MapReduce Input:Mapper输入,读取HDFS上的输入文件内容以键值对存储;
+Spit filed to rows:读取value值以分隔符 “|”  进行切分(注意我这里hdfs文件中的word是以”|”隔开的)
+Add constants:给每次出现的word追加一个常量字段mapValue，值为整数1.
+MapReduce Output:Mapper输出，key为每个word,这里为mapKey,value为常量值mapValue.
+
+创建Reducer转换如下图,Reducer读取mapper的输出.按照每个key值进行分组，对相应的常量值字段进行聚合,这里是做sum,然后最终输出到hdfs文件中去.
+
+
+MapReduce input:读取Mapper中的输出作为Reducer的输入
+GroupByKey:按照key进行分组(这里key是每个word), 然后对value进行聚合sum,求出每个word出现的总次数;
+MapReduce Output:最终的键值对，每行以&lt;单词，总次数&gt;来输出到hdfs上去.
+
+创建MapReduce Job创建最终的MapReduce Job,配置相应参数，调用Mapper和Re
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/05/17/Kettle实现MapReduce之WordCount/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/05/16/Pentaho Kettle 6.1连接CDH5.4.0集群/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -764,7 +931,7 @@ More info: Deployment
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-count">4</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -775,7 +942,7 @@ More info: Deployment
             
             <div class="site-state-item site-state-categories">
               <a href="/categories/index.html">
-                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-count">3</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -786,7 +953,7 @@ More info: Deployment
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-count">6</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
