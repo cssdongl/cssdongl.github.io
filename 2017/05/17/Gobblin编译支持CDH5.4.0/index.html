@@ -74,7 +74,7 @@
 <link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="MapReduce,ETL," />
+  <meta name="keywords" content="Camus,Gobblin,CDH," />
 
 
 
@@ -90,22 +90,17 @@
 
 
 
-<meta name="description" content="迁移前地址: http://www.cnblogs.com/cssdongl/archive/2016/10.html最近把之前写的Hadoop MapReduce程序又总结了下，发现很多逻辑基本都是大致相同的，于是想到能不能利用ETL工具来进行配置相关逻辑来实现MapReduce代码自动生成并执行,这样可以简化现有以及之后的一部分工作.于是选取了上手容易并对Hadoop支持的比较成熟的Penta">
-<meta name="keywords" content="MapReduce,ETL">
+<meta name="description" content="迁移前地址: http://www.cnblogs.com/cssdongl/p/6094642.html Gobblin的前身是linkedin的Camus,好多人也用过，准备用Gobblin的方式来抽取数据，不过由于连接的集群是CDH的，而Gobblin默认支持的是hadoop2.3.0,因此需要手动编译一个支持CDH的Gobblin版本，否则使用中会遇到无法写入hdfs等不兼容的问题.整理记">
+<meta name="keywords" content="Camus,Gobblin,CDH">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Pentaho Kettle 6.1连接CDH5.4.0集群(原)">
-<meta property="og:url" content="http://yoursite.com/2017/05/16/Pentaho Kettle 6.1连接CDH5.4.0集群/index.html">
+<meta property="og:title" content="Gobblin编译支持CDH5.4.0(原)">
+<meta property="og:url" content="http://yoursite.com/2017/05/17/Gobblin编译支持CDH5.4.0/index.html">
 <meta property="og:site_name" content="Syn良子的博客">
-<meta property="og:description" content="迁移前地址: http://www.cnblogs.com/cssdongl/archive/2016/10.html最近把之前写的Hadoop MapReduce程序又总结了下，发现很多逻辑基本都是大致相同的，于是想到能不能利用ETL工具来进行配置相关逻辑来实现MapReduce代码自动生成并执行,这样可以简化现有以及之后的一部分工作.于是选取了上手容易并对Hadoop支持的比较成熟的Penta">
-<meta property="og:image" content="http://oq1iog0cp.bkt.clouddn.com/kettleConf1.png">
-<meta property="og:image" content="http://oq1iog0cp.bkt.clouddn.com/kettleConf2.png">
-<meta property="og:image" content="http://oq1iog0cp.bkt.clouddn.com/kettleConf3.png">
-<meta property="og:image" content="http://oq1iog0cp.bkt.clouddn.com/kettleConf4.png">
-<meta property="og:updated_time" content="2017-05-17T02:40:01.173Z">
+<meta property="og:description" content="迁移前地址: http://www.cnblogs.com/cssdongl/p/6094642.html Gobblin的前身是linkedin的Camus,好多人也用过，准备用Gobblin的方式来抽取数据，不过由于连接的集群是CDH的，而Gobblin默认支持的是hadoop2.3.0,因此需要手动编译一个支持CDH的Gobblin版本，否则使用中会遇到无法写入hdfs等不兼容的问题.整理记">
+<meta property="og:updated_time" content="2017-05-17T04:48:10.971Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Pentaho Kettle 6.1连接CDH5.4.0集群(原)">
-<meta name="twitter:description" content="迁移前地址: http://www.cnblogs.com/cssdongl/archive/2016/10.html最近把之前写的Hadoop MapReduce程序又总结了下，发现很多逻辑基本都是大致相同的，于是想到能不能利用ETL工具来进行配置相关逻辑来实现MapReduce代码自动生成并执行,这样可以简化现有以及之后的一部分工作.于是选取了上手容易并对Hadoop支持的比较成熟的Penta">
-<meta name="twitter:image" content="http://oq1iog0cp.bkt.clouddn.com/kettleConf1.png">
+<meta name="twitter:title" content="Gobblin编译支持CDH5.4.0(原)">
+<meta name="twitter:description" content="迁移前地址: http://www.cnblogs.com/cssdongl/p/6094642.html Gobblin的前身是linkedin的Camus,好多人也用过，准备用Gobblin的方式来抽取数据，不过由于连接的集群是CDH的，而Gobblin默认支持的是hadoop2.3.0,因此需要手动编译一个支持CDH的Gobblin版本，否则使用中会遇到无法写入hdfs等不兼容的问题.整理记">
 
 
 
@@ -133,13 +128,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2017/05/16/Pentaho Kettle 6.1连接CDH5.4.0集群/"/>
+  <link rel="canonical" href="http://yoursite.com/2017/05/17/Gobblin编译支持CDH5.4.0/"/>
 
 
 
 
 
-  <title>Pentaho Kettle 6.1连接CDH5.4.0集群(原) | Syn良子的博客</title>
+  <title>Gobblin编译支持CDH5.4.0(原) | Syn良子的博客</title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -269,7 +264,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/05/16/Pentaho Kettle 6.1连接CDH5.4.0集群/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/05/17/Gobblin编译支持CDH5.4.0/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="cssdongl">
@@ -286,7 +281,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Pentaho Kettle 6.1连接CDH5.4.0集群(原)</h1>
+          <h1 class="post-title" itemprop="name headline">Gobblin编译支持CDH5.4.0(原)</h1>
         
 
         <div class="post-meta">
@@ -298,8 +293,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-05-16T18:39:04+08:00">
-                2017-05-16
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-05-17T12:30:22+08:00">
+                2017-05-17
               </time>
             
 
@@ -321,8 +316,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/ETL/" itemprop="url" rel="index">
-                    <span itemprop="name">ETL</span>
+                  <a href="/categories/Gobblin/" itemprop="url" rel="index">
+                    <span itemprop="name">Gobblin</span>
                   </a>
                 </span>
 
@@ -338,7 +333,7 @@
 
           
           
-             <span id="/2017/05/16/Pentaho Kettle 6.1连接CDH5.4.0集群/" class="leancloud_visitors" data-flag-title="Pentaho Kettle 6.1连接CDH5.4.0集群(原)">
+             <span id="/2017/05/17/Gobblin编译支持CDH5.4.0/" class="leancloud_visitors" data-flag-title="Gobblin编译支持CDH5.4.0(原)">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -366,53 +361,28 @@
       
 
       
-        <p>迁移前地址: <a href="http://www.cnblogs.com/cssdongl/archive/2016/10.html" target="_blank" rel="external">http://www.cnblogs.com/cssdongl/archive/2016/10.html</a><br>最近把之前写的Hadoop MapReduce程序又总结了下，发现很多逻辑基本都是大致相同的，于是想到能不能利用ETL工具来进行配置相关逻辑来实现MapReduce代码自动生成并执行,这样可以简化现有以及之后的一部分工作.于是选取了上手容易并对Hadoop支持的比较成熟的Pentaho Kettle来测试,把一些配置过程和遇到的坑记录下来.</p>
-<p>Kettle可以在官网下载到,但是官网会让你注册才能下载而且速度不稳定，所以推荐在<a href="https://sourceforge.net/projects/pentaho/files/Data%20Integration/" target="_blank" rel="external">这个链接</a>进行下载，各个版本都有，<br>我用的是PDI(Pentaho Data Integration)6.1,需要连接的集群是Hadoop2.6.0-CDH5.4.0.进入链接里的6.1文件夹直接下载pdi-ce-6.1.0.1-196.zip解压，进入data-integration根目录启动Spoon.bat，等待kettle启动成功.</p>
-<h1 id="一-准备工作"><a href="#一-准备工作" class="headerlink" title="一.准备工作"></a>一.准备工作</h1><p>在配置PDI连接Bigdata source之前，需要检查下需要连接的source版本和对应的Pentaho的组件是否兼容，如下图</p>
-<p><img src="http://oq1iog0cp.bkt.clouddn.com/kettleConf1.png" alt="PDI组件列表"></p>
-<p>可以看到，之前下载的PDI(上表中属于PDI Spoon),基本上是支持连接CDH,MapR,EMR,HDP等主流数据源的.我连接的集群是CDH5.4，也在支持范围内.</p>
-<h1 id="二-配置Pentaho组件Shims"><a href="#二-配置Pentaho组件Shims" class="headerlink" title="二.配置Pentaho组件Shims"></a>二.配置Pentaho组件Shims</h1><p>Shims这里我的理解是Pentaho提供的一系列连接各个source的适配器,具体配置位置根据Pentaho的组件来决定，现在的PDI Spoon的配置位置在../data-integration/plugins/pentaho-big-data-plugin/hadoop-configurations 下，注意这个地方要配置好对应数据源的shims,如下图有好几种数据源.<br><img src="http://oq1iog0cp.bkt.clouddn.com/kettleConf2.png" alt=""></p>
-<p>比如我当前连接的是CDH5.4.0,那么我先清空cdh55下的内容,随后下载对应的shims来解压拷贝到该目录下,具体shims<a href="https://sourceforge.net/projects/pentaho/files/Big%20Data%20Shims" title="下载位置" target="_blank" rel="external">下载位置</a><br>选择相应的PDI版本进入，下载对应的CDH版本的shims,我需要下载的是 pentaho-hadoop-shims-cdh54-package-61.2016.04.01-196-dist.zip,打开该zip,双击install.bat进行shims解压，将解压后的cdh54目录下的内容全部拷贝到hadoop-configurations下的默认的cdh55文件下里面去(其实cdh55这个应该可以改名为cdh54,但是修改完这个文件夹名称的话，PDI找不到该配置了，应该可以在哪儿设置，暂时没找到,找到的同学可以告诉我).<br><strong><br>这个地方一定要下载好对应的shims，否则PDI中即使你配置好正确的CDH连接信息，那么随后在使用过程中也会报各种莫名其妙的错误.</strong></p>
-<h1 id="三-编辑Cluster配置文件"><a href="#三-编辑Cluster配置文件" class="headerlink" title="三.编辑Cluster配置文件"></a>三.编辑Cluster配置文件</h1><p>完成上一步内容后，进入cdh55目录下,将CDH5.4集群上的hive-site.xml,mapred-site.xml,hbase-site.xml,core-site.xml,hdfs-site.xml,yarn-site.xml等配置文件拷贝到当前目录覆盖.然后进行一些必要的修改.如下<br>修改hive-site.xml,将hive的metastore修改为和集群保持一致</p>
-<p><code>&lt;property&gt;
-    &lt;name&gt;hive.metastore.uris&lt;/name&gt;
-    &lt;value&gt;修改为集群的thrift地址&lt;/value&gt;
-&lt;/property&gt;</code>  </p>
-<p>修改mapred-site.xm,如没有则添加并和集群保持一致</p>
-<pre><code>&lt;property&gt;
-&lt;name&gt;mapreduce.jobhistory.address&lt;/name&gt;
-&lt;value&gt;修改为集群的jobhistory地址&lt;/value&gt;
-&lt;/property&gt;
-&lt;property&gt;
-&lt;name&gt;mapreduce.app-submission.cross-platform&lt;/name&gt;
-&lt;value&gt;true&lt;/value&gt;
-    &lt;/property&gt;
-</code></pre><p>修改yarn-site.xml对应属性值，如没有则添加并和集群保持一致</p>
-<pre><code>&lt;property&gt;
-&lt;name&gt;yarn.application.classpath&lt;/name&gt;
- &lt;value&gt;$HADOOP_CLIENT_CONF_DIR,$HADOOP_CONF_DIR,$HADOOP_COMMON_HOME/*,$HADOOP_COMMON_HOME/lib/*,$HADOOP_HDFS_HOME/*,$HADOOP_HDFS_HOME/lib/*,$HADOOP_YARN_HOME/*,$HADOOP_YARN_HOME/lib/*&lt;/value&gt;
-&lt;/property&gt;
-&lt;property&gt;
-&lt;name&gt;yarn.resourcemanager.hostname&lt;/name&gt;
-&lt;value&gt;clouderamanager.cdh5.test&lt;/value&gt;
-&lt;/property&gt;
-&lt;property&gt;
-&lt;name&gt;yarn.resourcemanager.address&lt;/name&gt;
-&lt;value&gt;clouderamanager.cdh5.test:8032&lt;/value&gt;
-&lt;/property&gt;
-&lt;property&gt;
-&lt;name&gt;yarn.resourcemanager.admin.address&lt;/name&gt;
-&lt;value&gt;clouderamanager.cdh5.test:8033&lt;/value&gt;
-&lt;/property&gt;
-</code></pre><p>修改config.properties添加如下属性,注意我这里CDH5.4测试用，没有开启Kerberos认证</p>
-<p>authentication.superuser.provider=NO_AUTH</p>
-<p>如果开启了Kerberos认证，则需要修改更多参数.</p>
-<h1 id="四-新建Cluster连接并测试"><a href="#四-新建Cluster连接并测试" class="headerlink" title="四.新建Cluster连接并测试"></a>四.新建Cluster连接并测试</h1><p>完成上述配置后，启动Spoon.bat, 进入PDI开发界面.菜单栏中选择Tools-&gt;Hadoop Distribution,然后选择Cloudera CDH5.4并点击ok,然后重启PDI.　　</p>
-<p>在左边的View视图下会看到Hadoop clusters然后右键新建Cluster,如下图</p>
-<p><img src="http://oq1iog0cp.bkt.clouddn.com/kettleConf3.png" alt=""></p>
-<p>配置好对应的集群连接信息(可以参考shims下集群的*.xml配置文件)，点击”Test”进行测试，如下</p>
-<p><img src="http://oq1iog0cp.bkt.clouddn.com/kettleConf4.png" alt=""></p>
-<p>确保所有的结果都变为绿色则表示配置成功,如果有红色肯定是连接信息和集群不一致.</p>
+        <p>迁移前地址: <a href="http://www.cnblogs.com/cssdongl/p/6094642.html" target="_blank" rel="external">http://www.cnblogs.com/cssdongl/p/6094642.html</a></p>
+<p>Gobblin的前身是linkedin的Camus,好多人也用过，准备用Gobblin的方式来抽取数据，不过由于连接的集群是CDH的，而Gobblin默认支持的是hadoop2.3.0,因此需要手动编译一个支持CDH的Gobblin版本，否则使用中会遇到无法写入hdfs等不兼容的问题.整理记录其中遇到的一些问题和解决方式.</p>
+<h1 id="编译准备"><a href="#编译准备" class="headerlink" title="编译准备"></a>编译准备</h1><ol>
+<li>github上下载gobblin0.6.2的源代码解压到本地.</li>
+<li>了解Gradle自动化构建工具的基本使用</li>
+</ol>
+<h1 id="编译和问题解决"><a href="#编译和问题解决" class="headerlink" title="编译和问题解决"></a>编译和问题解决</h1><p>在源代码根目录下用该命令进行编译: ./gradlew clean build -PhadoopVersion=2.6.0-cdh5.4.0,不出意外会报错，总结为以下几类错误</p>
+<ul>
+<li><p>.找不到依赖的jar包，比如gradle-processors,coveralls-gradle-plugin等，这类问题都是因为对应的jar包无法下载成功(下载超时失败居多),多执行几次命令，如果还是不行，请手动下载,例如<br><a href="https://plugins.gradle.org/m2/org/kt3k/gradle/plugin/coveralls-gradle-plugin/1.0.2/coveralls-gradle-plugin-1.0.2.jar" target="_blank" rel="external">https://plugins.gradle.org/m2/org/kt3k/gradle/plugin/coveralls-gradle-plugin/1.0.2/coveralls-gradle-plugin-1.0.2.jar</a><br>根据错误提示手动下载需要的jar包，必要时请自觉FQ<br>下载jar包完成后，放入gradle的module目录，比如我的在当前用户的 ~/.gradle/caches/modules-2/,根据jar包名放入对应的module文件夹下，重新build执行命令即可</p>
+</li>
+<li><p>fatal: Not a git repository (or any of the parent directories): .git  异常<br>这个问题和git有关系，如果是用git命令checkout下来的源代码，一般不会有这个问题，而我是手动从github上下载的src压缩包，则需要加上另外一个版本参数，如下<br>./gradlew clean build  -PhadoopVersion=2.6.0-cdh5.4.0 -Pversion=gobblin_0.6.2-180-g5a11598<br>重新执行命令，该错误消失</p>
+</li>
+<li><p>.Could not resolve all dependencies for configuration ‘:gobblin-compaction :runtime’.<br> 这个错误需要加上另外一个参数，如下<br>./gradlew clean build -PhadoopVersion=2.6.0-cdh5.4.0 -Pversion=gobblin_0.6.2-180-g5a11598 –PuseHadoop2</p>
+</li>
+<li><p>Execution failed for task ‘:gobblin-yarn :test’.<br>这个问题大家基本都知道，test模块编译不过去，官方给的建议是加上另外一个参数来跳过，如下<br>./gradlew clean build -PhadoopVersion=2.6.0-cdh5.4.0 -Pversion=gobblin_0.6.2-180-g5a11598 -PuseHadoop2 -x test<br>继续build,问题消失</p>
+</li>
+<li><p>编译成功后，根目录下找到gobblin-distribution-0.6.2.tar.gz解压后，配置好后执行官方提供的wikipedia例子时报错:gobblin-runtime-0.6.2.jar not a valid jar<br>去lib下查看，发现只有gobblin-runtime-gobblin-0.6.2.jar,没有gobblin-runtime-0.6.2.jar,因此推断这里Pversion多了个gobblin,修改命令如下<br>./gradlew clean build -PhadoopVersion=2.6.0-cdh5.4.0 -Pversion=0.6.2 -PuseHadoop2 -x test<br>这次打包正常，执行bin/gobblin-mapreduce.sh又报第2条中的异常:Not a git repository<br>又耐心翻了翻官方的issues,发现0.6.2这块儿编译问题很多，所以决定直接编译gobblin-0.7.0源代码,进入gobblin-0.7.0源代码根目录执行如下命令<br>./gradlew clean build -PhadoopVersion=2.6.0-cdh5.4.0 -Pversion=0.7.0 -PuseHadoop2 -x test<br>ok,这次一次性成功,解压生成的gobblin-distribution-0.7.0.tar.gz,重新执行wikipedia的demo,成功执行</p>
+</li>
+</ul>
+<h1 id="问题总结"><a href="#问题总结" class="headerlink" title="问题总结"></a>问题总结</h1><p>Gobblin的编译主要会遇到一些jar包依赖和版本的问题，所以按照上述方式来一步一步解决后可以编译出适合自己的版本.官方文档还是很详细，大家可以多多查阅,另外还有源代码可以参考.</p>
+<p>参考资料:</p>
+<p><a href="http://gobblin.readthedocs.io/en/latest/Getting-Started/" target="_blank" rel="external">http://gobblin.readthedocs.io/en/latest/Getting-Started/</a><br><a href="https://github.com/linkedin/gobblin/issues/662" target="_blank" rel="external">https://github.com/linkedin/gobblin/issues/662</a><br><a href="https://github.com/linkedin/gobblin/issues/822" target="_blank" rel="external">https://github.com/linkedin/gobblin/issues/822</a><br><a href="https://github.com/linkedin/gobblin/issues/577" target="_blank" rel="external">https://github.com/linkedin/gobblin/issues/577</a></p>
 
       
     </div>
@@ -442,9 +412,11 @@
       
         <div class="post-tags">
           
-            <a href="/tags/MapReduce/" rel="tag"># MapReduce</a>
+            <a href="/tags/Camus/" rel="tag"># Camus</a>
           
-            <a href="/tags/ETL/" rel="tag"># ETL</a>
+            <a href="/tags/Gobblin/" rel="tag"># Gobblin</a>
+          
+            <a href="/tags/CDH/" rel="tag"># CDH</a>
           
         </div>
       
@@ -457,8 +429,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/05/16/blogTransfer/" rel="next" title="博客迁移">
-                <i class="fa fa-chevron-left"></i> 博客迁移
+              <a href="/2017/05/17/Kettle实现MapReduce之WordCount/" rel="next" title="Kettle实现MapReduce之WordCount(原)">
+                <i class="fa fa-chevron-left"></i> Kettle实现MapReduce之WordCount(原)
               </a>
             
           </div>
@@ -466,10 +438,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/05/17/Kettle实现MapReduce之WordCount/" rel="prev" title="Kettle实现MapReduce之WordCount(原)">
-                Kettle实现MapReduce之WordCount(原) <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -600,7 +568,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#一-准备工作"><span class="nav-number">1.</span> <span class="nav-text">一.准备工作</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#二-配置Pentaho组件Shims"><span class="nav-number">2.</span> <span class="nav-text">二.配置Pentaho组件Shims</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#三-编辑Cluster配置文件"><span class="nav-number">3.</span> <span class="nav-text">三.编辑Cluster配置文件</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#四-新建Cluster连接并测试"><span class="nav-number">4.</span> <span class="nav-text">四.新建Cluster连接并测试</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#编译准备"><span class="nav-number">1.</span> <span class="nav-text">编译准备</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#编译和问题解决"><span class="nav-number">2.</span> <span class="nav-text">编译和问题解决</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#问题总结"><span class="nav-number">3.</span> <span class="nav-text">问题总结</span></a></li></ol></div>
             
 
           </div>
