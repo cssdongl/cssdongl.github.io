@@ -1,0 +1,936 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Hive,Hbase," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1" />
+
+
+
+
+
+
+<meta name="description" content="迁移前地址:http://www.cnblogs.com/cssdongl/p/6857891.html 简单的说就是可以通过Hive SQL直接对hbase的表进行读写操作，对了，这里可能有人会问，为啥要这么集成呢，有什么场景呢。那我举个场景栗子,比如我们可能会用Hbase做后台历史日志的存储和统计. 而进行离线日志的存储统计的时候，你当然可以选择用Hadoop MR或者Spark来进行统计和分">
+<meta name="keywords" content="Hive,Hbase">
+<meta property="og:type" content="article">
+<meta property="og:title" content="HiveHbase集成实践(原)">
+<meta property="og:url" content="http://yoursite.com/2017/05/17/HiveHbase集成实践/index.html">
+<meta property="og:site_name" content="Syn良子的博客">
+<meta property="og:description" content="迁移前地址:http://www.cnblogs.com/cssdongl/p/6857891.html 简单的说就是可以通过Hive SQL直接对hbase的表进行读写操作，对了，这里可能有人会问，为啥要这么集成呢，有什么场景呢。那我举个场景栗子,比如我们可能会用Hbase做后台历史日志的存储和统计. 而进行离线日志的存储统计的时候，你当然可以选择用Hadoop MR或者Spark来进行统计和分">
+<meta property="og:updated_time" content="2017-05-17T07:52:08.856Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="HiveHbase集成实践(原)">
+<meta name="twitter:description" content="迁移前地址:http://www.cnblogs.com/cssdongl/p/6857891.html 简单的说就是可以通过Hive SQL直接对hbase的表进行读写操作，对了，这里可能有人会问，为啥要这么集成呢，有什么场景呢。那我举个场景栗子,比如我们可能会用Hbase做后台历史日志的存储和统计. 而进行离线日志的存储统计的时候，你当然可以选择用Hadoop MR或者Spark来进行统计和分">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/05/17/HiveHbase集成实践/"/>
+
+
+
+
+
+  <title>HiveHbase集成实践(原) | Syn良子的博客</title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Syn良子的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">技术和生活</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/05/17/HiveHbase集成实践/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="cssdongl">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://oq1iog0cp.bkt.clouddn.com/shiwanyin.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Syn良子的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">HiveHbase集成实践(原)</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-05-17T15:45:22+08:00">
+                2017-05-17
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Hive/" itemprop="url" rel="index">
+                    <span itemprop="name">Hive</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Hive/Hbase/" itemprop="url" rel="index">
+                    <span itemprop="name">Hbase</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2017/05/17/HiveHbase集成实践/" class="leancloud_visitors" data-flag-title="HiveHbase集成实践(原)">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>迁移前地址:<a href="http://www.cnblogs.com/cssdongl/p/6857891.html" target="_blank" rel="external">http://www.cnblogs.com/cssdongl/p/6857891.html</a></p>
+<p>简单的说就是可以通过Hive SQL直接对hbase的表进行读写操作，对了，这里可能有人会问，为啥要这么集成呢，有什么场景呢。那我举个场景栗子,比如我们可能会用Hbase做后台历史日志的存储和统计.</p>
+<p>而进行离线日志的存储统计的时候，你当然可以选择用Hadoop MR或者Spark来进行统计和分析并存入相应的Hbase表结构，随后前台可以利用thrift等方式进行实时的查询，ok,这些都能满足需求.</p>
+<p>那么时间长了以后，随着项目需求和数据种类以及临时需求的增多，写MR和Spark会不会很累？所以，当然想到可不可以直接通过Hive SQL来直接读写hbase，这就是一个很普通的需求.</p>
+<p>废话不说，官网有现成的例子可以参考,很详细:<a href="https://cwiki.apache.org/confluence/display/Hive/HBaseIntegration" target="_blank" rel="external">https://cwiki.apache.org/confluence/display/Hive/HBaseIntegration</a></p>
+<p>我整理和总结一下一些细节和遇到的问题</p>
+<h2 id="数据准备"><a href="#数据准备" class="headerlink" title="数据准备"></a>数据准备</h2><p>在hive中创建个基础表并插入数据,注意下面红色路径的txt可以在hive的examples目录下找到</p>
+<pre><code>CREATE TABLE pokes (foo INT, bar STRING);
+LOAD DATA LOCAL INPATH &apos;/data/examples/files/kv1.txt&apos; OVERWRITE INTO TABLE pokes;
+</code></pre><h2 id="Hive中创建Hbase表"><a href="#Hive中创建Hbase表" class="headerlink" title="Hive中创建Hbase表"></a>Hive中创建Hbase表</h2><p>这种情况就是在hive和hbase中同时创建新表然后建立hive和hbase的表映射关系，如果删除hive中的表，那么hbase的表也会消失,如下</p>
+<pre><code>CREATE TABLE hbase_table_1(key int, value string) 
+STORED BY &apos;org.apache.hadoop.hive.hbase.HBaseStorageHandler&apos;
+WITH SERDEPROPERTIES (&quot;hbase.columns.mapping&quot; = &quot;:key,cf1:val&quot;)
+TBLPROPERTIES (&quot;hbase.table.name&quot; = &quot;xyz&quot;, &quot;hbase.mapred.output.outputtable&quot; = &quot;xyz&quot;);
+INSERT OVERWRITE TABLE hbase_table_1 SELECT * FROM pokes WHERE foo=98;
+</code></pre><p>这里解释下,强调一下几点细节</p>
+<ol>
+<li><p>(key int, value string) 和(“hbase.columns.mapping” = “:key,cf1:val”)以及最后insert后的select的字段，请确定顺序都保持一致</p>
+</li>
+<li><p>这个hive表和hbase建立的映射就是:hbase的rowkey和hive表的select的第一个字段foo对应，而cf1是列族，val是列名，相当于已经固定好了，select查出的第二个字段就是对应的列值</p>
+</li>
+<li><p>这里 TBLPROPERTIES 定义了hbase中的表名，如果没有这行，那么hbase默认表名就和hive表名一致</p>
+</li>
+<li><p>HbaseStorageHandler很重要，hive和hbase的集成需要将hive-hbase-handler-x.y.z.jar(x.y.z是当前环境的jar包版本)配置在Hive client auxpath路径下,也就是说，你必须在hive-site.xml里面配置好hive.aux.jars.path，这个属性，而它的值是hive-hbase-handler-x.y.z.jar所在的路径.</p>
+</li>
+</ol>
+<p>##Hive映射Hbase多列族多列 ##</p>
+<p>类似于第一种情况，只是映射了多列族多列而已,如下</p>
+<pre><code>CREATE TABLE hbase_table_1(key int, value1 string, value2 int, value3 int) 
+STORED BY &apos;org.apache.hadoop.hive.hbase.HBaseStorageHandler&apos;
+WITH SERDEPROPERTIES (
+&quot;hbase.columns.mapping&quot; = &quot;:key,a:b,a:c,d:e&quot;
+);
+INSERT OVERWRITE TABLE hbase_table_1 SELECT foo, bar, foo+1, foo+2 
+FROM pokes WHERE foo=98 OR foo=100;
+</code></pre><p>强调的细节和上面那个单列一致，只是多了几个列族和对应的列,这里的列族和列都是提前定义好的.</p>
+<p>scan后结果如下</p>
+<pre><code>hbase(main):015:0&gt; scan &quot;hbase_table_1&quot;
+ROW                          COLUMN+CELL                                                                      
+                        column=a:b, timestamp=1267740457648, value=val_100                               
+                        column=a:c, timestamp=1267740457648, value=101                                   
+                        column=d:e, timestamp=1267740457648, value=102                                   
+                         column=a:b, timestamp=1267740457648, value=val_98                                
+                         column=a:c, timestamp=1267740457648, value=99                                    
+                         column=d:e, timestamp=1267740457648, value=100                                   
+row(s) in 0.0240 seconds
+</code></pre><p>##Hive访问已存在的hbase表##</p>
+<p>这种方式其实hive表是个外表，即使清空hive中的表数据，Hbase中的表不会受到影响.</p>
+<pre><code>CREATE EXTERNAL TABLE hbase_table_2(key int, value string) 
+STORED BY &apos;org.apache.hadoop.hive.hbase.HBaseStorageHandler&apos;
+WITH SERDEPROPERTIES (&quot;hbase.columns.mapping&quot; = &quot;cf1:val&quot;)
+TBLPROPERTIES(&quot;hbase.table.name&quot; = &quot;some_existing_table&quot;, &quot;hbase.mapred.output.outputtable&quot; = &quot;some_existing_table&quot;);
+</code></pre><p>##Hive映射Hbase动态列##</p>
+<p>为啥要动态列?因为有的场景下，我需要存入hbase列族下的列名是动态的要存值的是需要查询出来的，不是写死的，如果没有动态映射岂不累死,对应建表和插入如下</p>
+<pre><code>CREATE TABLE hbase_table_1(value map&lt;string,int&gt;, row_key int) 
+STORED BY &apos;org.apache.hadoop.hive.hbase.HBaseStorageHandler&apos;
+WITH SERDEPROPERTIES (
+&quot;hbase.columns.mapping&quot; = &quot;cf:,:key&quot;
+);
+INSERT OVERWRITE TABLE hbase_table_1 SELECT map(bar, foo), foo FROM pokes 
+WHERE foo=98 OR foo=100;
+</code></pre><p>强调一下几个细节</p>
+<ul>
+<li><p>注意这里表定义mapping的时候，只定义了一个列族名为cf,还有随后的rowkey</p>
+</li>
+<li><p>注意后面的SELECT的语句，map(bar,foo)中的bar映射的是列名，foo是列值，所以这里是动态的列插入,随后第2个select的列对应的row_key</p>
+</li>
+<li><p>使用hive map类型时，注意SELECT查出来的字段类型和 “CREATE TABLE hbase_table_1(value map<string,int>, row_key int)”中定义的字段类型需要一致，不然无法插入,详细解释的话，举个栗子<br>比如SELECT查出来的map(bar,foo)中列名和列值分别是varchar(50)和bigint类型的话,那么这个时候插入就会报异常然后插入失败<br>Cannot insert into target table because column number/types are different<br>那么怎么办？我想到二种方式，第一种就是你定义的时候就定义好类型映射保持一致，比如你可以索性将map中的key值在hive中都定义成string类型,另外一种是cast函数，再举个栗子，比如SELECT查出来的map(bar,foo)中的bar是varchar(50),foo是bigint,而建立表的时候定义的map<varchar(200),bigint>,这样依然插入不进去，那么可以进行cast,比如cast(bar as varchar(200)),ok,这样可以解决问题.<br>参考资料:<br><a href="https://cwiki.apache.org/confluence/display/Hive/HBaseIntegration" target="_blank" rel="external">https://cwiki.apache.org/confluence/display/Hive/HBaseIntegration</a><br><a href="http://blog.cloudera.com/blog/2010/06/integrating-hive-and-hbase/" target="_blank" rel="external">http://blog.cloudera.com/blog/2010/06/integrating-hive-and-hbase/</a><br><a href="http://blog.csdn.net/xiaoshunzi111/article/details/51803719" target="_blank" rel="external">http://blog.csdn.net/xiaoshunzi111/article/details/51803719</a><br><a href="http://blog.csdn.net/bdchome/article/details/45499641" target="_blank" rel="external">http://blog.csdn.net/bdchome/article/details/45499641</a></varchar(200),bigint></string,int></p>
+</li>
+</ul>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Hive/" rel="tag"># Hive</a>
+          
+            <a href="/tags/Hbase/" rel="tag"># Hbase</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/05/17/Hive的静态分区和动态分区/" rel="next" title="Hive的静态分区和动态分区(原)">
+                <i class="fa fa-chevron-left"></i> Hive的静态分区和动态分区(原)
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/05/17/Kafka到Hdfs的数据Pipeline整理/" rel="prev" title="Kafka到Hdfs的数据Pipeline整理(原)">
+                Kafka到Hdfs的数据Pipeline整理(原) <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="uyan_frame"></div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="http://oq1iog0cp.bkt.clouddn.com/shiwanyin.jpg"
+               alt="cssdongl" />
+          <p class="site-author-name" itemprop="name">cssdongl</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">20</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">21</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">22</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#数据准备"><span class="nav-number">1.</span> <span class="nav-text">数据准备</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Hive中创建Hbase表"><span class="nav-number">2.</span> <span class="nav-text">Hive中创建Hbase表</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">cssdongl</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    
+
+    
+      <!-- UY BEGIN -->
+      <div id="uyan_frame"></div>
+      <script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2133794"></script>
+      <!-- UY END -->
+    
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("JRdAwtt4GJfG1Uv2ae4VHKX5-gzGzoHsz", "sHeFhjgbjymSe5IwRWlW89oM");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

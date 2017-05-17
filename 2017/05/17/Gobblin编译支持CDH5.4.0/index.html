@@ -74,7 +74,7 @@
 <link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Camus,Gobblin,CDH," />
+  <meta name="keywords" content="Gobblin,Camus,CDH," />
 
 
 
@@ -91,13 +91,13 @@
 
 
 <meta name="description" content="迁移前地址: http://www.cnblogs.com/cssdongl/p/6094642.html Gobblin的前身是linkedin的Camus,好多人也用过，准备用Gobblin的方式来抽取数据，不过由于连接的集群是CDH的，而Gobblin默认支持的是hadoop2.3.0,因此需要手动编译一个支持CDH的Gobblin版本，否则使用中会遇到无法写入hdfs等不兼容的问题.整理记">
-<meta name="keywords" content="Camus,Gobblin,CDH">
+<meta name="keywords" content="Gobblin,Camus,CDH">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Gobblin编译支持CDH5.4.0(原)">
 <meta property="og:url" content="http://yoursite.com/2017/05/17/Gobblin编译支持CDH5.4.0/index.html">
 <meta property="og:site_name" content="Syn良子的博客">
 <meta property="og:description" content="迁移前地址: http://www.cnblogs.com/cssdongl/p/6094642.html Gobblin的前身是linkedin的Camus,好多人也用过，准备用Gobblin的方式来抽取数据，不过由于连接的集群是CDH的，而Gobblin默认支持的是hadoop2.3.0,因此需要手动编译一个支持CDH的Gobblin版本，否则使用中会遇到无法写入hdfs等不兼容的问题.整理记">
-<meta property="og:updated_time" content="2017-05-17T04:48:10.971Z">
+<meta property="og:updated_time" content="2017-05-17T04:51:19.564Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Gobblin编译支持CDH5.4.0(原)">
 <meta name="twitter:description" content="迁移前地址: http://www.cnblogs.com/cssdongl/p/6094642.html Gobblin的前身是linkedin的Camus,好多人也用过，准备用Gobblin的方式来抽取数据，不过由于连接的集群是CDH的，而Gobblin默认支持的是hadoop2.3.0,因此需要手动编译一个支持CDH的Gobblin版本，否则使用中会遇到无法写入hdfs等不兼容的问题.整理记">
@@ -380,9 +380,7 @@
 <li><p>编译成功后，根目录下找到gobblin-distribution-0.6.2.tar.gz解压后，配置好后执行官方提供的wikipedia例子时报错:gobblin-runtime-0.6.2.jar not a valid jar<br>去lib下查看，发现只有gobblin-runtime-gobblin-0.6.2.jar,没有gobblin-runtime-0.6.2.jar,因此推断这里Pversion多了个gobblin,修改命令如下<br>./gradlew clean build -PhadoopVersion=2.6.0-cdh5.4.0 -Pversion=0.6.2 -PuseHadoop2 -x test<br>这次打包正常，执行bin/gobblin-mapreduce.sh又报第2条中的异常:Not a git repository<br>又耐心翻了翻官方的issues,发现0.6.2这块儿编译问题很多，所以决定直接编译gobblin-0.7.0源代码,进入gobblin-0.7.0源代码根目录执行如下命令<br>./gradlew clean build -PhadoopVersion=2.6.0-cdh5.4.0 -Pversion=0.7.0 -PuseHadoop2 -x test<br>ok,这次一次性成功,解压生成的gobblin-distribution-0.7.0.tar.gz,重新执行wikipedia的demo,成功执行</p>
 </li>
 </ul>
-<h1 id="问题总结"><a href="#问题总结" class="headerlink" title="问题总结"></a>问题总结</h1><p>Gobblin的编译主要会遇到一些jar包依赖和版本的问题，所以按照上述方式来一步一步解决后可以编译出适合自己的版本.官方文档还是很详细，大家可以多多查阅,另外还有源代码可以参考.</p>
-<p>参考资料:</p>
-<p><a href="http://gobblin.readthedocs.io/en/latest/Getting-Started/" target="_blank" rel="external">http://gobblin.readthedocs.io/en/latest/Getting-Started/</a><br><a href="https://github.com/linkedin/gobblin/issues/662" target="_blank" rel="external">https://github.com/linkedin/gobblin/issues/662</a><br><a href="https://github.com/linkedin/gobblin/issues/822" target="_blank" rel="external">https://github.com/linkedin/gobblin/issues/822</a><br><a href="https://github.com/linkedin/gobblin/issues/577" target="_blank" rel="external">https://github.com/linkedin/gobblin/issues/577</a></p>
+<h1 id="问题总结"><a href="#问题总结" class="headerlink" title="问题总结"></a>问题总结</h1><p>Gobblin的编译主要会遇到一些jar包依赖和版本的问题，所以按照上述方式来一步一步解决后可以编译出适合自己的版本.官方文档还是很详细，大家可以多多查阅,另外还有源代码可以参考.<br>参考资料:<br><a href="http://gobblin.readthedocs.io/en/latest/Getting-Started/" target="_blank" rel="external">http://gobblin.readthedocs.io/en/latest/Getting-Started/</a><br><a href="https://github.com/linkedin/gobblin/issues/662" target="_blank" rel="external">https://github.com/linkedin/gobblin/issues/662</a><br><a href="https://github.com/linkedin/gobblin/issues/822" target="_blank" rel="external">https://github.com/linkedin/gobblin/issues/822</a><br><a href="https://github.com/linkedin/gobblin/issues/577" target="_blank" rel="external">https://github.com/linkedin/gobblin/issues/577</a></p>
 
       
     </div>
@@ -412,9 +410,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/Camus/" rel="tag"># Camus</a>
-          
             <a href="/tags/Gobblin/" rel="tag"># Gobblin</a>
+          
+            <a href="/tags/Camus/" rel="tag"># Camus</a>
           
             <a href="/tags/CDH/" rel="tag"># CDH</a>
           
@@ -438,6 +436,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/05/17/Spark计算均值/" rel="prev" title="Spark计算均值(原)">
+                Spark计算均值(原) <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -511,7 +513,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-count">20</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -522,7 +524,7 @@
             
             <div class="site-state-item site-state-categories">
               <a href="/categories/index.html">
-                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-count">21</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -533,7 +535,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">9</span>
+                <span class="site-state-item-count">22</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

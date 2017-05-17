@@ -261,7 +261,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/05/17/Gobblin编译支持CDH5.4.0/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/05/17/Hive读取外表数据时跳过文件行首和行尾/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="cssdongl">
@@ -280,7 +280,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2017/05/17/Gobblin编译支持CDH5.4.0/" itemprop="url">Gobblin编译支持CDH5.4.0(原)</a></h1>
+                <a class="post-title-link" href="/2017/05/17/Hive读取外表数据时跳过文件行首和行尾/" itemprop="url">Hive读取外表数据时跳过文件行首和行尾(原)</a></h1>
         
 
         <div class="post-meta">
@@ -292,7 +292,7 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-05-17T12:30:22+08:00">
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-05-17T15:58:44+08:00">
                 2017-05-17
               </time>
             
@@ -315,8 +315,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Gobblin/" itemprop="url" rel="index">
-                    <span itemprop="name">Gobblin</span>
+                  <a href="/categories/Hive/" itemprop="url" rel="index">
+                    <span itemprop="name">Hive</span>
                   </a>
                 </span>
 
@@ -332,7 +332,7 @@
 
           
           
-             <span id="/2017/05/17/Gobblin编译支持CDH5.4.0/" class="leancloud_visitors" data-flag-title="Gobblin编译支持CDH5.4.0(原)">
+             <span id="/2017/05/17/Hive读取外表数据时跳过文件行首和行尾/" class="leancloud_visitors" data-flag-title="Hive读取外表数据时跳过文件行首和行尾(原)">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -362,19 +362,20 @@
       
         
           
-          迁移前地址: http://www.cnblogs.com/cssdongl/p/6094642.html
-Gobblin的前身是linkedin的Camus,好多人也用过，准备用Gobblin的方式来抽取数据，不过由于连接的集群是CDH的，而Gobblin默认支持的是hadoop2.3.0,因此需要手动编译一个支持CDH的Gobblin版本，否则使用中会遇到无法写入hdfs等不兼容的问题.整理记录其中遇到的一些问题和解决方式.
-编译准备
-github上下载gobblin0.6.2的源代码解压到本地.
-了解Gradle自动化构建工具的基本使用
+          迁移前地址:http://www.cnblogs.com/cssdongl/p/6244010.html
+有时候用hive读取外表数据时，比如csv这种类型的，需要跳过行首或者行尾一些和数据无关的或者自动生成的多余信息，这里可以用属性设置来实现，快速mark下，建表的时候设置如下
+Create external table testtable (name string, message string) row format delimited fields terminated by &apos;\t&apos; lines terminated by &apos;\n&apos; location &apos;/user/file.csv&apos; tblproperties (&quot;skip.header.line.count&quot;=&quot;1&quot;, &quot;skip.footer.line.count&quot;=&quot;2&quot;);
+对，就是上面sql中tblproperties的2个属性
+“skip.heaer.line.count” 跳过文件行首多少行
+“skip.footer.line.count”跳过文件行尾多少行
+注意，这个属性的功能是hive0.13以后的都可以支持
+参考资料:
+https://issues.apache.org/jira/browse/HIVE-5795
 
-编译和问题解决在源代码根目录下用该命令进行编译: ./gradlew clean build -PhadoopVersion=2.6.0-cdh5.4.0,不出意外会报错，总结为以下几类错误
-
-.找不到依赖的jar包，比如gradle-processors,coveralls-gradle-plugin等，这类问题都是因为对应的jar包无法下载成功(下载超时失败居多),多执行几次命令，如果还是不行，请手动下载,例如https://plugins.gradle.org/m2/org/kt3k/gradle/plugin/coveralls-gradle-plugin/1.0.2/coveralls-gradle-plugin-1.0.2.jar根据错误提示手动下载需要的jar包，必要时请自觉FQ下载jar包完成后，放入gradle的module目录，比如我的在当前用户的 ~/.gradle/caches/modules-2/,根据jar包
-          ...
+          
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2017/05/17/Gobblin编译支持CDH5.4.0/#more" rel="contents">
+            <a class="btn" href="/2017/05/17/Hive读取外表数据时跳过文件行首和行尾/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -420,7 +421,7 @@ github上下载gobblin0.6.2的源代码解压到本地.
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/05/17/Kettle实现MapReduce之WordCount/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/05/17/Kafka到Hdfs的数据Pipeline整理/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="cssdongl">
@@ -439,7 +440,7 @@ github上下载gobblin0.6.2的源代码解压到本地.
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2017/05/17/Kettle实现MapReduce之WordCount/" itemprop="url">Kettle实现MapReduce之WordCount(原)</a></h1>
+                <a class="post-title-link" href="/2017/05/17/Kafka到Hdfs的数据Pipeline整理/" itemprop="url">Kafka到Hdfs的数据Pipeline整理(原)</a></h1>
         
 
         <div class="post-meta">
@@ -451,175 +452,8 @@ github上下载gobblin0.6.2的源代码解压到本地.
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-05-17T12:00:04+08:00">
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-05-17T15:55:29+08:00">
                 2017-05-17
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Hadoop/" itemprop="url" rel="index">
-                    <span itemprop="name">Hadoop</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2017/05/17/Kettle实现MapReduce之WordCount/" class="leancloud_visitors" data-flag-title="Kettle实现MapReduce之WordCount(原)">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数 </span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-          迁移前地址:http://www.cnblogs.com/cssdongl/p/6019439.html抽空用kettle配置了一个Mapreduce的Word count,发现还是很方便快捷的，废话不多说，进入正题.
-创建Mapper转换如下图,mapper读取hdfs输入，进行word的切分，输出每个word和整数常量值
-
-
-MapReduce Input:Mapper输入,读取HDFS上的输入文件内容以键值对存储;
-Spit filed to rows:读取value值以分隔符 “|”  进行切分(注意我这里hdfs文件中的word是以”|”隔开的)
-Add constants:给每次出现的word追加一个常量字段mapValue，值为整数1.
-MapReduce Output:Mapper输出，key为每个word,这里为mapKey,value为常量值mapValue.
-
-创建Reducer转换如下图,Reducer读取mapper的输出.按照每个key值进行分组，对相应的常量值字段进行聚合,这里是做sum,然后最终输出到hdfs文件中去.
-
-
-MapReduce input:读取Mapper中的输出作为Reducer的输入
-GroupByKey:按照key进行分组(这里key是每个word), 然后对value进行聚合sum,求出每个word出现的总次数;
-MapReduce Output:最终的键值对，每行以&lt;单词，总次数&gt;来输出到hdfs上去.
-
-创建MapReduce Job创建最终的MapReduce Job,配置相应参数，调用Mapper和Re
-          ...
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/05/17/Kettle实现MapReduce之WordCount/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/05/16/Pentaho Kettle 6.1连接CDH5.4.0集群/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="cssdongl">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="http://oq1iog0cp.bkt.clouddn.com/shiwanyin.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Syn良子的博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/05/16/Pentaho Kettle 6.1连接CDH5.4.0集群/" itemprop="url">Pentaho Kettle 6.1连接CDH5.4.0集群(原)</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-05-16T18:39:04+08:00">
-                2017-05-16
               </time>
             
 
@@ -648,6 +482,39 @@ MapReduce Output:最终的键值对，每行以&lt;单词，总次数&gt;来输�
 
                 
                 
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/ETL/Gobblin/" itemprop="url" rel="index">
+                    <span itemprop="name">Gobblin</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/ETL/Gobblin/Hadoop/" itemprop="url" rel="index">
+                    <span itemprop="name">Hadoop</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/ETL/Gobblin/Hadoop/Kafka/" itemprop="url" rel="index">
+                    <span itemprop="name">Kafka</span>
+                  </a>
+                </span>
+
+                
+                
               
             </span>
           
@@ -658,7 +525,7 @@ MapReduce Output:最终的键值对，每行以&lt;单词，总次数&gt;来输�
 
           
           
-             <span id="/2017/05/16/Pentaho Kettle 6.1连接CDH5.4.0集群/" class="leancloud_visitors" data-flag-title="Pentaho Kettle 6.1连接CDH5.4.0集群(原)">
+             <span id="/2017/05/17/Kafka到Hdfs的数据Pipeline整理/" class="leancloud_visitors" data-flag-title="Kafka到Hdfs的数据Pipeline整理(原)">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -688,16 +555,20 @@ MapReduce Output:最终的键值对，每行以&lt;单词，总次数&gt;来输�
       
         
           
-          迁移前地址: http://www.cnblogs.com/cssdongl/archive/2016/10.html最近把之前写的Hadoop MapReduce程序又总结了下，发现很多逻辑基本都是大致相同的，于是想到能不能利用ETL工具来进行配置相关逻辑来实现MapReduce代码自动生成并执行,这样可以简化现有以及之后的一部分工作.于是选取了上手容易并对Hadoop支持的比较成熟的Pentaho Kettle来测试,把一些配置过程和遇到的坑记录下来.
-Kettle可以在官网下载到,但是官网会让你注册才能下载而且速度不稳定，所以推荐在这个链接进行下载，各个版本都有，我用的是PDI(Pentaho Data Integration)6.1,需要连接的集群是Hadoop2.6.0-CDH5.4.0.进入链接里的6.1文件夹直接下载pdi-ce-6.1.0.1-196.zip解压，进入data-integration根目录启动Spoon.bat，等待kettle启动成功.
-一.准备工作在配置PDI连接Bigdata source之前，需要检查下需要连接的source版本和对应的Pentaho的组件是否兼容，如下图
+          迁移前地址:http://www.cnblogs.com/cssdongl/p/6077311.html
+找时间总结整理了下数据从Kafka到Hdfs的一些pipeline，如下
 
-可以看到，之前下载的PDI(上表中属于PDI Spoon),基本上是支持连接CDH,MapR,EMR,HDP等主流数据源的.我连接的集群是CDH5.4，也在支持范围内.
-二.配置Pentaho组件ShimsShims这里我的理解是Pentaho提供的一系列连接各个source的适配器,具体配置位置根据Pentaho的组件来决定，现在的PDI Spoon的配置位置在..
+Kafka -&gt; Flume –&gt; Hadoop Hdfs常用方案,基于配置,需要注意hdfs小文件性能等问题.GitHub地址:  https://github.com/apache/flume
+
+Kafka -&gt; Kafka Hadoop Loader -&gt;Hadoop HdfsKafka Hadoop Loader通过为kafka Topic下每个分区建立对应的split来创建task实现增量的加载数据流到hdfs,上次消费的partition offset是通过zookeeper来记录的.简单易用.GitHub地址:  https://github.com/michal-harish/kafka-hadoop-loader
+
+Kafka -&gt; KaBoom -&gt; Hadoop HdfsKaBoom是一个借助Krackle(开源的kafka客户端，能极大的减少对象的创建，提高应用程序的性能)来消费kafka的Topic分区数据随后写如hdfs,利用Curator和Zookeeper来实现分布式服务,能够灵活的根据topic来写入不同的hdfs目录.GitHub地址:  https://github.com/blackberry/KaBoom
+
+Kafka -&gt; Kafka-connect-hdfs -&gt; Hadoop HdfsConfluent的
           ...
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2017/05/16/Pentaho Kettle 6.1连接CDH5.4.0集群/#more" rel="contents">
+            <a class="btn" href="/2017/05/17/Kafka到Hdfs的数据Pipeline整理/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -743,7 +614,7 @@ Kettle可以在官网下载到,但是官网会让你注册才能下载而且速�
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/05/16/blogTransfer/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/05/17/HiveHbase集成实践/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="cssdongl">
@@ -762,7 +633,7 @@ Kettle可以在官网下载到,但是官网会让你注册才能下载而且速�
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2017/05/16/blogTransfer/" itemprop="url">博客迁移</a></h1>
+                <a class="post-title-link" href="/2017/05/17/HiveHbase集成实践/" itemprop="url">HiveHbase集成实践(原)</a></h1>
         
 
         <div class="post-meta">
@@ -774,8 +645,8 @@ Kettle可以在官网下载到,但是官网会让你注册才能下载而且速�
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-05-16T18:10:04+08:00">
-                2017-05-16
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-05-17T15:45:22+08:00">
+                2017-05-17
               </time>
             
 
@@ -797,8 +668,19 @@ Kettle可以在官网下载到,但是官网会让你注册才能下载而且速�
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Blogs/" itemprop="url" rel="index">
-                    <span itemprop="name">Blogs</span>
+                  <a href="/categories/Hive/" itemprop="url" rel="index">
+                    <span itemprop="name">Hive</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Hive/Hbase/" itemprop="url" rel="index">
+                    <span itemprop="name">Hbase</span>
                   </a>
                 </span>
 
@@ -814,7 +696,7 @@ Kettle可以在官网下载到,但是官网会让你注册才能下载而且速�
 
           
           
-             <span id="/2017/05/16/blogTransfer/" class="leancloud_visitors" data-flag-title="博客迁移">
+             <span id="/2017/05/17/HiveHbase集成实践/" class="leancloud_visitors" data-flag-title="HiveHbase集成实践(原)">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -844,11 +726,20 @@ Kettle可以在官网下载到,但是官网会让你注册才能下载而且速�
       
         
           
-          老博客地址个人技术博客从博客园迁移至当前github,以前的博客会陆续迁移过来
-          
+          迁移前地址:http://www.cnblogs.com/cssdongl/p/6857891.html
+简单的说就是可以通过Hive SQL直接对hbase的表进行读写操作，对了，这里可能有人会问，为啥要这么集成呢，有什么场景呢。那我举个场景栗子,比如我们可能会用Hbase做后台历史日志的存储和统计.
+而进行离线日志的存储统计的时候，你当然可以选择用Hadoop MR或者Spark来进行统计和分析并存入相应的Hbase表结构，随后前台可以利用thrift等方式进行实时的查询，ok,这些都能满足需求.
+那么时间长了以后，随着项目需求和数据种类以及临时需求的增多，写MR和Spark会不会很累？所以，当然想到可不可以直接通过Hive SQL来直接读写hbase，这就是一个很普通的需求.
+废话不说，官网有现成的例子可以参考,很详细:https://cwiki.apache.org/confluence/display/Hive/HBaseIntegration
+我整理和总结一下一些细节和遇到的问题
+数据准备在hive中创建个基础表并插入数据,注意下面红色路径的txt可以在hive的examples目录下找到
+CREATE TABLE pokes (foo INT, bar STRING);
+LOAD DATA LOCAL INPATH &apos;/data/examples/files/kv1.txt&apos; OVERWRITE INTO TABLE pokes;
+Hive中创建Hbase表这种情况就是在hive和hbase中同时创建新表然后建立hive和hbase的表映射关系
+          ...
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2017/05/16/blogTransfer/#more" rel="contents">
+            <a class="btn" href="/2017/05/17/HiveHbase集成实践/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -894,7 +785,7 @@ Kettle可以在官网下载到,但是官网会让你注册才能下载而且速�
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/05/16/hello-world/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/05/17/Hive的静态分区和动态分区/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="cssdongl">
@@ -913,7 +804,7 @@ Kettle可以在官网下载到,但是官网会让你注册才能下载而且速�
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2017/05/16/hello-world/" itemprop="url">Hello Hexo</a></h1>
+                <a class="post-title-link" href="/2017/05/17/Hive的静态分区和动态分区/" itemprop="url">Hive的静态分区和动态分区(原)</a></h1>
         
 
         <div class="post-meta">
@@ -925,8 +816,8 @@ Kettle可以在官网下载到,但是官网会让你注册才能下载而且速�
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-05-16T18:00:04+08:00">
-                2017-05-16
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-05-17T15:40:24+08:00">
+                2017-05-17
               </time>
             
 
@@ -948,8 +839,8 @@ Kettle可以在官网下载到,但是官网会让你注册才能下载而且速�
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Blogs/" itemprop="url" rel="index">
-                    <span itemprop="name">Blogs</span>
+                  <a href="/categories/Hive/" itemprop="url" rel="index">
+                    <span itemprop="name">Hive</span>
                   </a>
                 </span>
 
@@ -965,7 +856,7 @@ Kettle可以在官网下载到,但是官网会让你注册才能下载而且速�
 
           
           
-             <span id="/2017/05/16/hello-world/" class="leancloud_visitors" data-flag-title="Hello Hexo">
+             <span id="/2017/05/17/Hive的静态分区和动态分区/" class="leancloud_visitors" data-flag-title="Hive的静态分区和动态分区(原)">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -995,20 +886,1051 @@ Kettle可以在官网下载到,但是官网会让你注册才能下载而且速�
       
         
           
-          Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub.
-Quick StartCreate a new post1$ hexo new "My New Post"
-More info: Writing
-Run server1$ hexo server
-More info: Server
-Generate static files1$ hexo generate
-More info: Generating
-Deploy to remote sites1$ hexo deploy
-More info: Deployment
+          迁移前地址:http://www.cnblogs.com/cssdongl/p/6831884.html
+虽然之前已经用过很多次hive的分区表，但是还是找时间快速回顾总结一下加深理解.
+举个栗子，基本需求就是Hive有一张非常详细的原子数据表original_device_open，而且还在不断随着时间增长，那么我需要给它进行分区，为什么要分区?因为我想缩小查询范围，提高速度和性能.
+分区其实是物理上对hdfs不同目录进行数据的load操作，0.7之后的版本都会自动创建不存在的hdfs的目录，不同的目录对应不同的分区字段，当然会有一个处于最顶层的主分区字段.
+我这里的分区字段主要是时间，分为年，月，日，时
+首先建立一个新的分区表（这里我不在原始数据表直接操作)
+CREATE TABLE device_open (
+deviceid varchar(50),
+...
+)
+PARTITIONED BY (year varchar(50),month varchar(50),day varchar(50),hour varchar(50))
+ROW FORMAT DELIMITED FIELDS TERMINATED BY &apos;\t&apos;;
+然后我要从原始表中select数据插入到新建的分区表中去，如下采用动态插入(…代表省略的字段)
+set hive.exec.dynamic.partition=true;
+set hive.exec.dynamic.partition.mode=nonstrict;
+insert overwrite table device_op
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/05/17/Hive的静态分区和动态分区/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/05/17/Cannot obtain block length for LocatedBlock故障分析和解决/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="cssdongl">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://oq1iog0cp.bkt.clouddn.com/shiwanyin.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Syn良子的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/05/17/Cannot obtain block length for LocatedBlock故障分析和解决/" itemprop="url">Cannot obtain block length for LocatedBlock故障分析和解决(原)</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-05-17T15:39:49+08:00">
+                2017-05-17
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Flume/" itemprop="url" rel="index">
+                    <span itemprop="name">Flume</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Flume/Hadoop/" itemprop="url" rel="index">
+                    <span itemprop="name">Hadoop</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2017/05/17/Cannot obtain block length for LocatedBlock故障分析和解决/" class="leancloud_visitors" data-flag-title="Cannot obtain block length for LocatedBlock故障分析和解决(原)">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+          迁移前地址:http://www.cnblogs.com/cssdongl/p/6700512.html
+这几天想cat一下某天的HDFS文件内容的时候突然报Cannot obtain block length for LocatedBlock异常，get也一样，这样无法访问hdfs文件的问题必须解决，Mark一下问题背景和解决过程
+#问题背景#
+问题产生的原因可能是由于前几日Hadoop集群维护的时候，基础运维组操作不当，先关闭的Hadoop集群，然后才关闭的Flume agent导致的hdfs文件写入后状态不一致。排查和解决过程如下.
+#解决过程#
+
+既然是hdfs文件出问题,用fsck检查一下吧hdfs fsck /当然你可以具体到指定的hdfs路径,检查完打印结果没有发现任何异常，没有发现损坏或者Corrupt的block，继续排查
+那么加上其他参数细查hdfs fsck / –openforwriteok,这次检查出来不少文件打印显示都是 openforwrite状态,而且我测试相应文件确实不能读取,这很不正常不是吗？Flume已经写过的hdfs文件居然还处于openforwrite状态，而且无法cat和get所以这里的”Cannot obtain block length for LocatedBlock”结合字面意思讲应该是当前有文件处于写入状态尚未关闭，无法与对应的datanode通信来成功标识其block长度.那么分析其产生的可能性，举栗子如下
+Flume客户端写入hdfs文件时的网络连接被不正常的关闭了或者
+Flume客户端写入hdfs失败了，而且其repl
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/05/17/Cannot obtain block length for LocatedBlock故障分析和解决/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/05/17/Linux命令执行的屏幕输出内容重定向到日志文件/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="cssdongl">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://oq1iog0cp.bkt.clouddn.com/shiwanyin.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Syn良子的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/05/17/Linux命令执行的屏幕输出内容重定向到日志文件/" itemprop="url">Linux命令执行的屏幕输出内容重定向到日志文件(原)</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-05-17T15:39:29+08:00">
+                2017-05-17
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Shell/" itemprop="url" rel="index">
+                    <span itemprop="name">Shell</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2017/05/17/Linux命令执行的屏幕输出内容重定向到日志文件/" class="leancloud_visitors" data-flag-title="Linux命令执行的屏幕输出内容重定向到日志文件(原)">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+          迁移前地址:http://www.cnblogs.com/cssdongl/p/6679346.html
+快速mark一下这个命令细节，免得以后使用又忘记了
+大家都知道可以用echo来输出内容到文件，比如 echo “hello,word”&gt;&gt; temp.txt
+那么我现在想把hadoop或者spark的命令执行的屏幕输出到文件怎么办？很简单，命令如下
+ hadoop jar *.jar $mrClass &gt; mr.log 2&gt;&amp;1
+注意上面命令 *.jar和$mrClass替换成符合自己的jar包名称和class.
+注意后面的2&gt;&amp;1是关键，必不可少，没有的话就无法在mr.log中看到hadoop jar执行过程的内容输出了
+解释一下 2&gt;&amp;1
+1代表标准输出,2代表标准错误
+那么命令后面跟 2&gt;&amp;1意思就是把命令执行的标准错误和标准输出都重定向到mr.log里面去.
 
           
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2017/05/16/hello-world/#more" rel="contents">
+            <a class="btn" href="/2017/05/17/Linux命令执行的屏幕输出内容重定向到日志文件/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/05/17/Kafka connect快速构建数据ETL通道/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="cssdongl">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://oq1iog0cp.bkt.clouddn.com/shiwanyin.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Syn良子的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/05/17/Kafka connect快速构建数据ETL通道/" itemprop="url">Kafka connect快速构建数据ETL通道(原)</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-05-17T15:38:11+08:00">
+                2017-05-17
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Kafka/" itemprop="url" rel="index">
+                    <span itemprop="name">Kafka</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Kafka/ETL/" itemprop="url" rel="index">
+                    <span itemprop="name">ETL</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2017/05/17/Kafka connect快速构建数据ETL通道/" class="leancloud_visitors" data-flag-title="Kafka connect快速构建数据ETL通道(原)">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+          迁移前地址:http://www.cnblogs.com/cssdongl/p/6262739.html
+业余时间调研了一下Kafka connect的配置和使用，记录一些自己的理解和心得,欢迎指正.
+#背景介绍#
+Kafka connect是Confluent公司(当时开发出Apache Kafka的核心团队成员出来创立的新公司)开发的confluent platform的核心功能.大家都知道现在数据的ETL过程经常会选择kafka作为消息中间件应用在离线和实时的使用场景中,而kafka的数据上游和下游一直没有一个无缝衔接的pipeline来实现统一,比如会选择flume或者logstash采集数据到kafka,然后kafka又通过其他方式pull或者push数据到目标存储.而kafka connect旨在围绕kafka构建一个可伸缩的，可靠的数据流通道，通过kafka connect可以快速实现大量数据进出kafka从而和其他源数据源或者目标数据源进行交互构造一个低延迟的数据pipeline.给个图更直观点，大家感受下.
+
+#Kafka-connect快速配置#
+这里Confluent官方很贴心的提供了一个集成的镜像以便quickstart,如下链接
+https://s3-us-west-2.amazonaws.com/confluent-files/kafka_connect_blog.ova
+这是存储在Amazon S3上的，直接点击即可下载.这里我使用VMWare直接打开,刚开始会提示一个错误，不用管它直接点击重试即可
+系统加载的过程中会默认初始化虚拟机的网络配置，这
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/05/17/Kafka connect快速构建数据ETL通道/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/05/17/Python日期字符串比较/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="cssdongl">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://oq1iog0cp.bkt.clouddn.com/shiwanyin.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Syn良子的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/05/17/Python日期字符串比较/" itemprop="url">Python日期字符串比较(原)</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-05-17T15:36:49+08:00">
+                2017-05-17
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Python/" itemprop="url" rel="index">
+                    <span itemprop="name">Python</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2017/05/17/Python日期字符串比较/" class="leancloud_visitors" data-flag-title="Python日期字符串比较(原)">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+          迁移前地址:http://www.cnblogs.com/cssdongl/p/6729120.html
+需要用python的脚本来快速检测一个文件内的二个时间日期字符串的大小，其实实现很简单,首先一些基础的日期格式化知识如下
+%a星期的简写。如 星期三为Web
+%A星期的全写。如 星期三为Wednesday
+%b月份的简写。如4月份为Apr
+%B月份的全写。如4月份为April
+%c: 日期时间的字符串表示。（如： 04/07/10 10:43:39）
+%d: 日在这个月中的天数（是这个月的第几天）
+%f: 微秒（范围[0,999999]）
+%H: 小时（24小时制，[0, 23]）
+%I: 小时（12小时制，[0, 11]）
+%j: 日在年中的天数 [001,366]（是当年的第几天）
+%m: 月份（[01,12]）
+%M: 分钟（[00,59]）
+%p: AM或者PM
+%S: 秒（范围为[00,61]，为什么不是[00, 59]，参考python手册~_~）
+%U: 周在当年的周数当年的第几周），星期天作为周的第一天
+%w: 今天在这周的天数，范围为[0, 6]，6表示星期天
+%W: 周在当年的周数（是当年的第几周），星期一作为周的第一天
+%x: 日期字符串（如：04/07/10）
+%X: 时间字符串（如：10:43:39）
+%y: 2个数字表示的年份
+%Y: 4个数字表示的年份
+%z: 与utc时间的间隔 （如果是本地时间，返回空字符串）
+%Z: 时区名称（如果是本地时间，返回空字符串）
+%%: %% =&gt; %
+然后需要了解python中time,datetime
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/05/17/Python日期字符串比较/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/05/17/Scala集合和Java集合对应转换关系/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="cssdongl">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://oq1iog0cp.bkt.clouddn.com/shiwanyin.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Syn良子的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/05/17/Scala集合和Java集合对应转换关系/" itemprop="url">Scala集合和Java集合对应转换关系(原)</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-05-17T14:58:44+08:00">
+                2017-05-17
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Scala/" itemprop="url" rel="index">
+                    <span itemprop="name">Scala</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Scala/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2017/05/17/Scala集合和Java集合对应转换关系/" class="leancloud_visitors" data-flag-title="Scala集合和Java集合对应转换关系(原)">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+          迁移前地址:http://www.cnblogs.com/cssdongl/p/6237327.html
+用Scala编码的时候，经常会遇到scala集合和Java集合互相转换的case,特意mark一下，加深记忆
+scala.collection.Iterable &lt;=&gt; java.lang.Iterable
+scala.collection.Iterable &lt;=&gt; java.util.Collection
+scala.collection.Iterator &lt;=&gt; java.util.{ Iterator, Enumeration }
+scala.collection.mutable.Buffer &lt;=&gt; java.util.List
+scala.collection.mutable.Set &lt;=&gt; java.util.Set
+scala.collection.mutable.Map &lt;=&gt; java.util.{ Map, Dictionary }
+scala.collection.mutable.ConcurrentMap &lt;=&gt; java.util.concurrent.ConcurrentMap
+scala.collection.Seq  =&gt; java.util.List
+scala.collection.mutable.Seq =&gt; java.util.List
+scala.collection.Set  =&gt; java.util.Set
+scala.coll
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/05/17/Scala集合和Java集合对应转换关系/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/05/17/MapReduce和Spark写入Hbase多表总结/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="cssdongl">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://oq1iog0cp.bkt.clouddn.com/shiwanyin.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Syn良子的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/05/17/MapReduce和Spark写入Hbase多表总结/" itemprop="url">MapReduce和Spark写入Hbase多表总结(原)</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-05-17T14:55:33+08:00">
+                2017-05-17
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Hbase/" itemprop="url" rel="index">
+                    <span itemprop="name">Hbase</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Hbase/Spark/" itemprop="url" rel="index">
+                    <span itemprop="name">Spark</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2017/05/17/MapReduce和Spark写入Hbase多表总结/" class="leancloud_visitors" data-flag-title="MapReduce和Spark写入Hbase多表总结(原)">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+          迁移前地址:http://www.cnblogs.com/cssdongl/p/6227195.html
+大家都知道用mapreduce或者spark写入已知的hbase中的表时，直接在mapreduce或者spark的driver class中声明如下代码
+job.getConfiguration().set(TableOutputFormat.OUTPUT_TABLE, tablename);
+随后mapreduce在mapper或者reducer中直接context写入即可,而spark则是构造好包含Put的PairRDDFunctions后saveAsHadoopDataset即可.而经常会碰到一些要求是根据输入数据，处理后需要写入hbase多个表或者表名是未知的，需要按照数据中某个字段来构造表名写入hbase.由于表名未知，所以不能设置TableOutputFormat.OUTPUT_TABLE,那么这种要求也容易实现，分别总结mapreduce和spark的实现方法(其实到最后会发现殊途同归)
+#MapReduce写入Hbase多表#在MR的main方法中加入如下代码即可
+job.setOutputFormatClass(MultiTableOutputFormat.class);
+随后就可以在mapper或者reducer的context中根据相关字段构造表名和put写入多个hbase表.
+#Spark写入Hbase多表#
+这里直接用我测试过的spark streaming程序写入多个hbase表，上代码
+object SparkStreamingWriteToH
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/05/17/MapReduce和Spark写入Hbase多表总结/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1048,6 +1970,10 @@ More info: Deployment
   </section>
 
   
+  <nav class="pagination">
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right"></i></a>
+  </nav>
+
 
 
           </div>
@@ -1090,7 +2016,7 @@ More info: Deployment
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-count">20</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -1101,7 +2027,7 @@ More info: Deployment
             
             <div class="site-state-item site-state-categories">
               <a href="/categories/index.html">
-                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-count">21</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -1112,7 +2038,7 @@ More info: Deployment
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">9</span>
+                <span class="site-state-item-count">22</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

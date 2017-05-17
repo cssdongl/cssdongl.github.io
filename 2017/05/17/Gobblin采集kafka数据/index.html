@@ -1,0 +1,954 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Hdfs,Kafka,Gobblin," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1" />
+
+
+
+
+
+
+<meta name="description" content="迁移前地址:http://www.cnblogs.com/cssdongl/p/6121382.html 找时间记录一下利用Gobblin采集kafka数据的过程，话不多说，进入正题 #Gobblin环境变量准备#需要配置好Gobblin0.7.0工作时对应的环境变量，可以去Gobblin的bin目录的gobblin-env.sh配置，比如 export GOBBLIN_JOB_CONFIG_DI">
+<meta name="keywords" content="Hdfs,Kafka,Gobblin">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Gobblin采集kafka数据(原)">
+<meta property="og:url" content="http://yoursite.com/2017/05/17/Gobblin采集kafka数据/index.html">
+<meta property="og:site_name" content="Syn良子的博客">
+<meta property="og:description" content="迁移前地址:http://www.cnblogs.com/cssdongl/p/6121382.html 找时间记录一下利用Gobblin采集kafka数据的过程，话不多说，进入正题 #Gobblin环境变量准备#需要配置好Gobblin0.7.0工作时对应的环境变量，可以去Gobblin的bin目录的gobblin-env.sh配置，比如 export GOBBLIN_JOB_CONFIG_DI">
+<meta property="og:image" content="http://oq1iog0cp.bkt.clouddn.com/gobblinKafka1.png">
+<meta property="og:image" content="http://oq1iog0cp.bkt.clouddn.com/gobblinKafka2.png">
+<meta property="og:updated_time" content="2017-05-17T06:19:26.449Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Gobblin采集kafka数据(原)">
+<meta name="twitter:description" content="迁移前地址:http://www.cnblogs.com/cssdongl/p/6121382.html 找时间记录一下利用Gobblin采集kafka数据的过程，话不多说，进入正题 #Gobblin环境变量准备#需要配置好Gobblin0.7.0工作时对应的环境变量，可以去Gobblin的bin目录的gobblin-env.sh配置，比如 export GOBBLIN_JOB_CONFIG_DI">
+<meta name="twitter:image" content="http://oq1iog0cp.bkt.clouddn.com/gobblinKafka1.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/05/17/Gobblin采集kafka数据/"/>
+
+
+
+
+
+  <title>Gobblin采集kafka数据(原) | Syn良子的博客</title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Syn良子的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">技术和生活</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/05/17/Gobblin采集kafka数据/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="cssdongl">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://oq1iog0cp.bkt.clouddn.com/shiwanyin.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Syn良子的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Gobblin采集kafka数据(原)</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-05-17T13:55:32+08:00">
+                2017-05-17
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Gobblin/" itemprop="url" rel="index">
+                    <span itemprop="name">Gobblin</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Gobblin/Kafka/" itemprop="url" rel="index">
+                    <span itemprop="name">Kafka</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2017/05/17/Gobblin采集kafka数据/" class="leancloud_visitors" data-flag-title="Gobblin采集kafka数据(原)">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>迁移前地址:<a href="http://www.cnblogs.com/cssdongl/p/6121382.html" target="_blank" rel="external">http://www.cnblogs.com/cssdongl/p/6121382.html</a></p>
+<p>找时间记录一下利用Gobblin采集kafka数据的过程，话不多说，进入正题</p>
+<p>#Gobblin环境变量准备#<br>需要配置好Gobblin0.7.0工作时对应的环境变量，可以去Gobblin的bin目录的gobblin-env.sh配置，比如</p>
+<pre><code>export GOBBLIN_JOB_CONFIG_DIR=~/gobblin/gobblin-config-dir
+export GOBBLIN_WORK_DIR=~/gobblin/gobblin-work-dir
+HADOOP_BIN_DIR=/opt/cloudera/parcels/CDH-5.4.0-1.cdh5.4.0.p0.27/lib/hadoop/bin
+</code></pre><p>也可以去自己当前用户bashrc下配置,当然，确保JAVA_HOME也已经配置.<br>这里配置的Gobblin的配置文件目录和工作目录以及执行MR需要用到的hadoop bin目录</p>
+<p>#Gobblin Standalone模式配置和使用#</p>
+<p>顾名思义，就是在部署Gobblin的单节点上来采集kafka数据，没有用到Hadoop MR,配置过程如下<br>首先去GOBBLIN_JOB_CONFIG_DIR下，新建一个gobblinStandalone.pull配置文件,配置如下</p>
+<pre><code>job.name=GobblinKafkaQuickStart
+job.group=GobblinKafka
+job.description=Gobblin quick start job for Kafka
+job.lock.enabled=false
+job.schedule=0 0/3 * * * ?
+kafka.brokers=datanode01:9092
+source.class=gobblin.source.extractor.extract.kafka.KafkaSimpleSource
+extract.namespace=gobblin.extract.kafka
+
+writer.builder.class=gobblin.writer.SimpleDataWriterBuilder
+writer.file.path.type=tablename
+writer.destination.type=HDFS
+writer.output.format=txt
+
+data.publisher.type=gobblin.publisher.BaseDataPublisher
+
+mr.job.max.mappers=1
+
+metrics.reporting.file.enabled=true
+metrics.log.dir=${env:GOBBLIN_WORK_DIR}/metrics
+metrics.reporting.file.suffix=txt
+
+bootstrap.with.offset=earliest
+</code></pre><p>这里需要配置好抽取数据的kafka broker以及一些gobblin的工作组件，如source,extract,writer,publisher等，不明白的可以参考Gobblin wiki,很详细.</p>
+<p>我这里额外配置了一个job.schedule让gobblin三分钟检查一次kafka的所有topic是否有新增，然后抽取任务就会三分钟一次定时执行.这里用的Gobblin自带的Quartz定时器.</p>
+<p>ok,配置好以后进入Gobblin根目录,启动命令如:</p>
+<p> bin/gobblin-standalone.sh –conffile $GOBBLIN_JOB_CONFIG_DIR/gobblinStandalone.pull start</p>
+<p>我这里GOBBLIN_JOB_CONFIG_DIR有多个pull文件，因此需要指明，如果GOBBLIN_JOB_CONFIG_DIR下只有一个配置文件，那么直接bin/gobblin-standalone.sh start即可执行</p>
+<p>最终抽取过来的数据会输出到GOBBLIN_WORK_DIR/job-output 中去.</p>
+<p>#Gobblin MapReduce模式配置和使用#</p>
+<p>这次配置Gobblin会使用MapReduce来抽取kafka数据到Hdfs，新建gobblin-mr.pull文件，配置如下</p>
+<pre><code>job.name=GobblinKafkaToHdfs
+job.group=GobblinToHdfs1
+job.description=Pull data from kafka to hdfs use Gobblin
+job.lock.enabled=false
+kafka.brokers=datanode01:9092
+
+source.class=gobblin.source.extractor.extract.kafka.KafkaSimpleSource
+extract.namespace=gobblin.extract.kafka
+topic.whitelist=jsonTest
+
+writer.builder.class=gobblin.writer.SimpleDataWriterBuilder
+simple.writer.delimiter=\n
+simple.writer.prepend.size=false
+writer.file.path.type=tablename
+writer.destination.type=HDFS
+writer.output.format=txt
+writer.partitioner.class=gobblin.example.simplejson.TimeBasedJsonWriterPartitioner
+writer.partition.level=hourly
+writer.partition.pattern=yyyy/MM/dd/HH
+writer.partition.columns=time
+writer.partition.timezone=Asia/Shanghai
+data.publisher.type=gobblin.publisher.TimePartitionedDataPublisher
+
+mr.job.max.mappers=1
+
+metrics.reporting.file.enabled=true
+metrics.log.dir=/gobblin-kafka/metrics
+metrics.reporting.file.suffix=txt
+
+bootstrap.with.offset=earliest
+
+fs.uri=master:8020
+writer.fs.uri=${fs.uri}
+state.store.fs.uri=${fs.uri}
+
+mr.job.root.dir=/gobblin-kafka/working
+state.store.dir=/gobblin-kafka/state-store
+task.data.root.dir=/jobs/kafkaetl/gobblin/gobblin-kafka/task-data
+data.publisher.final.dir=/gobblintest/job-output
+</code></pre><p>注意标红部分的配置第一行，我这里加了topic过滤，只对topic名称为jsonTest的主题感兴趣</p>
+<p>因为需求是需要将gobblin的topic数据按照每天每小时来进行目录分区，具体分区目录需要根据kafka record中的时间字段来</p>
+<p>我这里record是json格式的，时间字段格式如{…”time”:”2016-10-12 00:30:20”…},因此需要继承Gobblin的TimeBasedWriterPartitioner来重写子类方法按照时间字段对hdfs的目录分区</p>
+<p>以下配置需要注意</p>
+<p>fs.uri=master:8020</p>
+<p>改成自己的集群的hdfs地址</p>
+<p>writer.partition.columns=time</p>
+<p>这里的time和json中的时间字段保持一致即可</p>
+<p>writer.partition.level=hourly</p>
+<p>表示hdfs分区到小时</p>
+<p>writer.partition.pattern=yyyy/MM/dd/HH</p>
+<p>表示最终需要在hdfs分区的目录格式(按照自己的最终分区需求自定义即可)</p>
+<p>writer.partitioner.class=gobblin.example.simplejson.TimeBasedJsonWriterPartitioner</p>
+<p>重写的hdfs按照json时间字段分区的子类，代码我提交到github了，参考如下链接</p>
+<p><a href="https://github.com/cssdongl/gobblin/blob/master/gobblin-example/src/main/java/gobblin/example/simplejson/TimeBasedJsonWriterPartitioner.java" target="_blank" rel="external">https://github.com/cssdongl/gobblin/blob/master/gobblin-example/src/main/java/gobblin/example/simplejson/TimeBasedJsonWriterPartitioner.java</a></p>
+<p>将扩展后的类加入Gobblin相应的模块，我这里是放入gobblin-example模块中去了，重新build,build有问题的话请参考这篇文章</p>
+<p>上面配置文件最后的那些路径都是hdfs路径，请确保Gobblin有读写权限</p>
+<p>随后启动命令</p>
+<p>bin/gobblin-mapreduce.sh –conf $GOBBLIN_JOB_CONFIG_DIR/gobblin-mr.pull</p>
+<p>运行成功后，hdfs会出现如下目录,jsonTest是按照对应topic名称生成的,如下图</p>
+<p><img src="http://oq1iog0cp.bkt.clouddn.com/gobblinKafka1.png" alt=""></p>
+<p><img src="http://oq1iog0cp.bkt.clouddn.com/gobblinKafka2.png" alt=""></p>
+<p>注意MR模式配置Quartz定时调度我试了好几次不起作用，因此如果需要定时执行抽取的话请利用外部的工具，比如Linux的crontab或者Oozie或者Azkaban都是可以的.</p>
+<p>#Gobblin使用总结#</p>
+<ol>
+<li>先熟悉Gobblin官方wiki,写的很详细</li>
+<li>github上fork一个源代码仔细阅读下source,extract，partioner这块儿的代码</li>
+<li>使用中遇到问题多研究Gobblin的log和Hadoop的log.<br>参考资料:<br><a href="http://gobblin.readthedocs.io/en/latest/case-studies/Kafka-HDFS-Ingestion/" target="_blank" rel="external">http://gobblin.readthedocs.io/en/latest/case-studies/Kafka-HDFS-Ingestion/</a><br><a href="http://gobblin.readthedocs.io/en/latest/user-guide/Partitioned-Writers/" target="_blank" rel="external">http://gobblin.readthedocs.io/en/latest/user-guide/Partitioned-Writers/</a><br><a href="http://gobblin.readthedocs.io/en/latest/developer-guide/IDE-setup/" target="_blank" rel="external">http://gobblin.readthedocs.io/en/latest/developer-guide/IDE-setup/</a><br><a href="http://gobblin.readthedocs.io/en/latest/user-guide/FAQs/" target="_blank" rel="external">http://gobblin.readthedocs.io/en/latest/user-guide/FAQs/</a></li>
+</ol>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Hdfs/" rel="tag"># Hdfs</a>
+          
+            <a href="/tags/Kafka/" rel="tag"># Kafka</a>
+          
+            <a href="/tags/Gobblin/" rel="tag"># Gobblin</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/05/17/Hive索引功能测试/" rel="next" title="Hive索引功能测试(原)">
+                <i class="fa fa-chevron-left"></i> Hive索引功能测试(原)
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/05/17/Spark读写Hbase的二种方式对比/" rel="prev" title="Spark读写Hbase的二种方式对比(原)">
+                Spark读写Hbase的二种方式对比(原) <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="uyan_frame"></div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview sidebar-panel sidebar-panel-active">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="http://oq1iog0cp.bkt.clouddn.com/shiwanyin.jpg"
+               alt="cssdongl" />
+          <p class="site-author-name" itemprop="name">cssdongl</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">20</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">21</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">22</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">cssdongl</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    
+
+    
+      <!-- UY BEGIN -->
+      <div id="uyan_frame"></div>
+      <script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2133794"></script>
+      <!-- UY END -->
+    
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("JRdAwtt4GJfG1Uv2ae4VHKX5-gzGzoHsz", "sHeFhjgbjymSe5IwRWlW89oM");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
