@@ -374,13 +374,13 @@
         
           
           迁移前地址:http://www.cnblogs.com/cssdongl/p/6238007.html
-#传统方式#
-这种方式就是常用的TableInputFormat和TableOutputFormat来读写hbase，如下代码所示
+传统方式这种方式就是常用的TableInputFormat和TableOutputFormat来读写hbase，如下代码所示
 
 简单解释下，用sc.newAPIHadoopRDD根据conf中配置好的scan来从Hbase的数据列族中读取包含(ImmutableBytesWritable, Result)的RDD,随后取出rowkey和value的键值对儿利用StatCounter进行一些最大最小值的计算最终写入hbase的统计列族.
-#SparkOnHbase方式#
-重点介绍第二种方式,这种方式其实是利用Cloudera-labs开源的一个HbaseContext的工具类来支持spark用RDD的方式批量读写hbase,先给个传送门大家感受下https://github.com/cloudera-labs/SparkOnHBase/blob/cdh5-0.0.2/src/main/scala/com/cloudera/spark/hbase/HBaseContext.scalahttps://issues.apache.org/jira/browse/HBASE-13992https://issues.apache.org/jira/browse/HBASE-14160
-虽然这个hbase-spark的module在Hbase上的集成任务很早就完成了，但是已知发布的任何版本我还没找到该模块，不知道什么情况,再等等吧那么问题来了，这种方式的优势在哪儿呢，官方的解释我翻
+SparkOnHbase方式重点介绍第二种方式,这种方式其实是利用Cloudera-labs开源的一个HbaseContext的工具类来支持spark用RDD的方式批量读写hbase,先给个传送门大家感受下https://github.com/cloudera-labs/SparkOnHBase/blob/cdh5-0.0.2/src/main/scala/com/cloudera/spark/hbase/HBaseContext.scalahttps://issues.apache.org/jira/browse/HBASE-13992https://issues.apache.org/jira/browse/HBASE-14160
+虽然这个hbase-spark的module在Hbase上的集成任务很早就完成了，但是已知发布的任何版本我还没找到该模块，不知道什么情况,再等等吧那么问题来了，这种方式的优势在哪儿呢，官方的解释我翻译如下
+
+无
           ...
           <!--noindex-->
           <div class="post-button text-center">
@@ -544,17 +544,16 @@
           
           迁移前地址:http://www.cnblogs.com/cssdongl/p/6121382.html
 找时间记录一下利用Gobblin采集kafka数据的过程，话不多说，进入正题
-#Gobblin环境变量准备#需要配置好Gobblin0.7.0工作时对应的环境变量，可以去Gobblin的bin目录的gobblin-env.sh配置，比如
+Gobblin环境变量准备需要配置好Gobblin0.7.0工作时对应的环境变量，可以去Gobblin的bin目录的gobblin-env.sh配置，比如
 export GOBBLIN_JOB_CONFIG_DIR=~/gobblin/gobblin-config-dir
 export GOBBLIN_WORK_DIR=~/gobblin/gobblin-work-dir
 HADOOP_BIN_DIR=/opt/cloudera/parcels/CDH-5.4.0-1.cdh5.4.0.p0.27/lib/hadoop/bin
 也可以去自己当前用户bashrc下配置,当然，确保JAVA_HOME也已经配置.这里配置的Gobblin的配置文件目录和工作目录以及执行MR需要用到的hadoop bin目录
-#Gobblin Standalone模式配置和使用#
-顾名思义，就是在部署Gobblin的单节点上来采集kafka数据，没有用到Hadoop MR,配置过程如下首先去GOBBLIN_JOB_CONFIG_DIR下，新建一个gobblinStandalone.pull配置文件,配置如下
+Gobblin Standalone模式配置和使用顾名思义，就是在部署Gobblin的单节点上来采集kafka数据，没有用到Hadoop MR,配置过程如下首先去GOBBLIN_JOB_CONFIG_DIR下，新建一个gobblinStandalone.pull配置文件,配置如下
 job.name=GobblinKafkaQuickStart
 job.group=GobblinKafka
 job.description=Gobblin quick start job for Kafka
-jo
+job.loc
           ...
           <!--noindex-->
           <div class="post-button text-center">

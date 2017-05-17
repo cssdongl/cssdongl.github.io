@@ -74,7 +74,7 @@
 <link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Hdfs,Kafka,Gobblin," />
+  <meta name="keywords" content="Hdfs,Gobblin,Kafka," />
 
 
 
@@ -90,19 +90,19 @@
 
 
 
-<meta name="description" content="迁移前地址:http://www.cnblogs.com/cssdongl/p/6121382.html 找时间记录一下利用Gobblin采集kafka数据的过程，话不多说，进入正题 #Gobblin环境变量准备#需要配置好Gobblin0.7.0工作时对应的环境变量，可以去Gobblin的bin目录的gobblin-env.sh配置，比如 export GOBBLIN_JOB_CONFIG_DI">
-<meta name="keywords" content="Hdfs,Kafka,Gobblin">
+<meta name="description" content="迁移前地址:http://www.cnblogs.com/cssdongl/p/6121382.html 找时间记录一下利用Gobblin采集kafka数据的过程，话不多说，进入正题 Gobblin环境变量准备需要配置好Gobblin0.7.0工作时对应的环境变量，可以去Gobblin的bin目录的gobblin-env.sh配置，比如 export GOBBLIN_JOB_CONFIG_DIR=">
+<meta name="keywords" content="Hdfs,Gobblin,Kafka">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Gobblin采集kafka数据(原)">
 <meta property="og:url" content="http://yoursite.com/2017/05/17/Gobblin采集kafka数据/index.html">
 <meta property="og:site_name" content="Syn良子的博客">
-<meta property="og:description" content="迁移前地址:http://www.cnblogs.com/cssdongl/p/6121382.html 找时间记录一下利用Gobblin采集kafka数据的过程，话不多说，进入正题 #Gobblin环境变量准备#需要配置好Gobblin0.7.0工作时对应的环境变量，可以去Gobblin的bin目录的gobblin-env.sh配置，比如 export GOBBLIN_JOB_CONFIG_DI">
+<meta property="og:description" content="迁移前地址:http://www.cnblogs.com/cssdongl/p/6121382.html 找时间记录一下利用Gobblin采集kafka数据的过程，话不多说，进入正题 Gobblin环境变量准备需要配置好Gobblin0.7.0工作时对应的环境变量，可以去Gobblin的bin目录的gobblin-env.sh配置，比如 export GOBBLIN_JOB_CONFIG_DIR=">
 <meta property="og:image" content="http://oq1iog0cp.bkt.clouddn.com/gobblinKafka1.png">
 <meta property="og:image" content="http://oq1iog0cp.bkt.clouddn.com/gobblinKafka2.png">
-<meta property="og:updated_time" content="2017-05-17T06:19:26.449Z">
+<meta property="og:updated_time" content="2017-05-17T08:08:37.834Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Gobblin采集kafka数据(原)">
-<meta name="twitter:description" content="迁移前地址:http://www.cnblogs.com/cssdongl/p/6121382.html 找时间记录一下利用Gobblin采集kafka数据的过程，话不多说，进入正题 #Gobblin环境变量准备#需要配置好Gobblin0.7.0工作时对应的环境变量，可以去Gobblin的bin目录的gobblin-env.sh配置，比如 export GOBBLIN_JOB_CONFIG_DI">
+<meta name="twitter:description" content="迁移前地址:http://www.cnblogs.com/cssdongl/p/6121382.html 找时间记录一下利用Gobblin采集kafka数据的过程，话不多说，进入正题 Gobblin环境变量准备需要配置好Gobblin0.7.0工作时对应的环境变量，可以去Gobblin的bin目录的gobblin-env.sh配置，比如 export GOBBLIN_JOB_CONFIG_DIR=">
 <meta name="twitter:image" content="http://oq1iog0cp.bkt.clouddn.com/gobblinKafka1.png">
 
 
@@ -377,13 +377,12 @@
       
         <p>迁移前地址:<a href="http://www.cnblogs.com/cssdongl/p/6121382.html" target="_blank" rel="external">http://www.cnblogs.com/cssdongl/p/6121382.html</a></p>
 <p>找时间记录一下利用Gobblin采集kafka数据的过程，话不多说，进入正题</p>
-<p>#Gobblin环境变量准备#<br>需要配置好Gobblin0.7.0工作时对应的环境变量，可以去Gobblin的bin目录的gobblin-env.sh配置，比如</p>
+<h1 id="Gobblin环境变量准备"><a href="#Gobblin环境变量准备" class="headerlink" title="Gobblin环境变量准备"></a>Gobblin环境变量准备</h1><p>需要配置好Gobblin0.7.0工作时对应的环境变量，可以去Gobblin的bin目录的gobblin-env.sh配置，比如</p>
 <pre><code>export GOBBLIN_JOB_CONFIG_DIR=~/gobblin/gobblin-config-dir
 export GOBBLIN_WORK_DIR=~/gobblin/gobblin-work-dir
 HADOOP_BIN_DIR=/opt/cloudera/parcels/CDH-5.4.0-1.cdh5.4.0.p0.27/lib/hadoop/bin
 </code></pre><p>也可以去自己当前用户bashrc下配置,当然，确保JAVA_HOME也已经配置.<br>这里配置的Gobblin的配置文件目录和工作目录以及执行MR需要用到的hadoop bin目录</p>
-<p>#Gobblin Standalone模式配置和使用#</p>
-<p>顾名思义，就是在部署Gobblin的单节点上来采集kafka数据，没有用到Hadoop MR,配置过程如下<br>首先去GOBBLIN_JOB_CONFIG_DIR下，新建一个gobblinStandalone.pull配置文件,配置如下</p>
+<h1 id="Gobblin-Standalone模式配置和使用"><a href="#Gobblin-Standalone模式配置和使用" class="headerlink" title="Gobblin Standalone模式配置和使用"></a>Gobblin Standalone模式配置和使用</h1><p>顾名思义，就是在部署Gobblin的单节点上来采集kafka数据，没有用到Hadoop MR,配置过程如下<br>首先去GOBBLIN_JOB_CONFIG_DIR下，新建一个gobblinStandalone.pull配置文件,配置如下</p>
 <pre><code>job.name=GobblinKafkaQuickStart
 job.group=GobblinKafka
 job.description=Gobblin quick start job for Kafka
@@ -413,8 +412,7 @@ bootstrap.with.offset=earliest
 <p> bin/gobblin-standalone.sh –conffile $GOBBLIN_JOB_CONFIG_DIR/gobblinStandalone.pull start</p>
 <p>我这里GOBBLIN_JOB_CONFIG_DIR有多个pull文件，因此需要指明，如果GOBBLIN_JOB_CONFIG_DIR下只有一个配置文件，那么直接bin/gobblin-standalone.sh start即可执行</p>
 <p>最终抽取过来的数据会输出到GOBBLIN_WORK_DIR/job-output 中去.</p>
-<p>#Gobblin MapReduce模式配置和使用#</p>
-<p>这次配置Gobblin会使用MapReduce来抽取kafka数据到Hdfs，新建gobblin-mr.pull文件，配置如下</p>
+<h1 id="Gobblin-MapReduce模式配置和使用"><a href="#Gobblin-MapReduce模式配置和使用" class="headerlink" title="Gobblin MapReduce模式配置和使用"></a>Gobblin MapReduce模式配置和使用</h1><p>这次配置Gobblin会使用MapReduce来抽取kafka数据到Hdfs，新建gobblin-mr.pull文件，配置如下</p>
 <pre><code>job.name=GobblinKafkaToHdfs
 job.group=GobblinToHdfs1
 job.description=Pull data from kafka to hdfs use Gobblin
@@ -477,8 +475,7 @@ data.publisher.final.dir=/gobblintest/job-output
 <p><img src="http://oq1iog0cp.bkt.clouddn.com/gobblinKafka1.png" alt=""></p>
 <p><img src="http://oq1iog0cp.bkt.clouddn.com/gobblinKafka2.png" alt=""></p>
 <p>注意MR模式配置Quartz定时调度我试了好几次不起作用，因此如果需要定时执行抽取的话请利用外部的工具，比如Linux的crontab或者Oozie或者Azkaban都是可以的.</p>
-<p>#Gobblin使用总结#</p>
-<ol>
+<h1 id="Gobblin使用总结"><a href="#Gobblin使用总结" class="headerlink" title="Gobblin使用总结"></a>Gobblin使用总结</h1><ol>
 <li>先熟悉Gobblin官方wiki,写的很详细</li>
 <li>github上fork一个源代码仔细阅读下source,extract，partioner这块儿的代码</li>
 <li>使用中遇到问题多研究Gobblin的log和Hadoop的log.<br>参考资料:<br><a href="http://gobblin.readthedocs.io/en/latest/case-studies/Kafka-HDFS-Ingestion/" target="_blank" rel="external">http://gobblin.readthedocs.io/en/latest/case-studies/Kafka-HDFS-Ingestion/</a><br><a href="http://gobblin.readthedocs.io/en/latest/user-guide/Partitioned-Writers/" target="_blank" rel="external">http://gobblin.readthedocs.io/en/latest/user-guide/Partitioned-Writers/</a><br><a href="http://gobblin.readthedocs.io/en/latest/developer-guide/IDE-setup/" target="_blank" rel="external">http://gobblin.readthedocs.io/en/latest/developer-guide/IDE-setup/</a><br><a href="http://gobblin.readthedocs.io/en/latest/user-guide/FAQs/" target="_blank" rel="external">http://gobblin.readthedocs.io/en/latest/user-guide/FAQs/</a></li>
@@ -514,9 +511,9 @@ data.publisher.final.dir=/gobblintest/job-output
           
             <a href="/tags/Hdfs/" rel="tag"># Hdfs</a>
           
-            <a href="/tags/Kafka/" rel="tag"># Kafka</a>
-          
             <a href="/tags/Gobblin/" rel="tag"># Gobblin</a>
+          
+            <a href="/tags/Kafka/" rel="tag"># Kafka</a>
           
         </div>
       
@@ -590,8 +587,17 @@ data.publisher.final.dir=/gobblintest/job-output
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="http://oq1iog0cp.bkt.clouddn.com/shiwanyin.jpg"
@@ -653,6 +659,22 @@ data.publisher.final.dir=/gobblintest/job-output
 
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Gobblin环境变量准备"><span class="nav-number">1.</span> <span class="nav-text">Gobblin环境变量准备</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Gobblin-Standalone模式配置和使用"><span class="nav-number">2.</span> <span class="nav-text">Gobblin Standalone模式配置和使用</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Gobblin-MapReduce模式配置和使用"><span class="nav-number">3.</span> <span class="nav-text">Gobblin MapReduce模式配置和使用</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Gobblin使用总结"><span class="nav-number">4.</span> <span class="nav-text">Gobblin使用总结</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       

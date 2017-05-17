@@ -97,7 +97,7 @@
 <meta property="og:url" content="http://yoursite.com/2017/05/17/HiveHbase集成实践/index.html">
 <meta property="og:site_name" content="Syn良子的博客">
 <meta property="og:description" content="迁移前地址:http://www.cnblogs.com/cssdongl/p/6857891.html 简单的说就是可以通过Hive SQL直接对hbase的表进行读写操作，对了，这里可能有人会问，为啥要这么集成呢，有什么场景呢。那我举个场景栗子,比如我们可能会用Hbase做后台历史日志的存储和统计. 而进行离线日志的存储统计的时候，你当然可以选择用Hadoop MR或者Spark来进行统计和分">
-<meta property="og:updated_time" content="2017-05-17T07:52:08.856Z">
+<meta property="og:updated_time" content="2017-05-17T08:06:07.263Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="HiveHbase集成实践(原)">
 <meta name="twitter:description" content="迁移前地址:http://www.cnblogs.com/cssdongl/p/6857891.html 简单的说就是可以通过Hive SQL直接对hbase的表进行读写操作，对了，这里可能有人会问，为啥要这么集成呢，有什么场景呢。那我举个场景栗子,比如我们可能会用Hbase做后台历史日志的存储和统计. 而进行离线日志的存储统计的时候，你当然可以选择用Hadoop MR或者Spark来进行统计和分">
@@ -398,8 +398,7 @@ INSERT OVERWRITE TABLE hbase_table_1 SELECT * FROM pokes WHERE foo=98;
 <li><p>HbaseStorageHandler很重要，hive和hbase的集成需要将hive-hbase-handler-x.y.z.jar(x.y.z是当前环境的jar包版本)配置在Hive client auxpath路径下,也就是说，你必须在hive-site.xml里面配置好hive.aux.jars.path，这个属性，而它的值是hive-hbase-handler-x.y.z.jar所在的路径.</p>
 </li>
 </ol>
-<p>##Hive映射Hbase多列族多列 ##</p>
-<p>类似于第一种情况，只是映射了多列族多列而已,如下</p>
+<h2 id="Hive映射Hbase多列族多列"><a href="#Hive映射Hbase多列族多列" class="headerlink" title="Hive映射Hbase多列族多列"></a>Hive映射Hbase多列族多列</h2><p>类似于第一种情况，只是映射了多列族多列而已,如下</p>
 <pre><code>CREATE TABLE hbase_table_1(key int, value1 string, value2 int, value3 int) 
 STORED BY &apos;org.apache.hadoop.hive.hbase.HBaseStorageHandler&apos;
 WITH SERDEPROPERTIES (
@@ -418,14 +417,12 @@ ROW                          COLUMN+CELL
                          column=a:c, timestamp=1267740457648, value=99                                    
                          column=d:e, timestamp=1267740457648, value=100                                   
 row(s) in 0.0240 seconds
-</code></pre><p>##Hive访问已存在的hbase表##</p>
-<p>这种方式其实hive表是个外表，即使清空hive中的表数据，Hbase中的表不会受到影响.</p>
+</code></pre><h2 id="Hive访问已存在的hbase表"><a href="#Hive访问已存在的hbase表" class="headerlink" title="Hive访问已存在的hbase表"></a>Hive访问已存在的hbase表</h2><p>这种方式其实hive表是个外表，即使清空hive中的表数据，Hbase中的表不会受到影响.</p>
 <pre><code>CREATE EXTERNAL TABLE hbase_table_2(key int, value string) 
 STORED BY &apos;org.apache.hadoop.hive.hbase.HBaseStorageHandler&apos;
 WITH SERDEPROPERTIES (&quot;hbase.columns.mapping&quot; = &quot;cf1:val&quot;)
 TBLPROPERTIES(&quot;hbase.table.name&quot; = &quot;some_existing_table&quot;, &quot;hbase.mapred.output.outputtable&quot; = &quot;some_existing_table&quot;);
-</code></pre><p>##Hive映射Hbase动态列##</p>
-<p>为啥要动态列?因为有的场景下，我需要存入hbase列族下的列名是动态的要存值的是需要查询出来的，不是写死的，如果没有动态映射岂不累死,对应建表和插入如下</p>
+</code></pre><h2 id="Hive映射Hbase动态列"><a href="#Hive映射Hbase动态列" class="headerlink" title="Hive映射Hbase动态列"></a>Hive映射Hbase动态列</h2><p>为啥要动态列?因为有的场景下，我需要存入hbase列族下的列名是动态的要存值的是需要查询出来的，不是写死的，如果没有动态映射岂不累死,对应建表和插入如下</p>
 <pre><code>CREATE TABLE hbase_table_1(value map&lt;string,int&gt;, row_key int) 
 STORED BY &apos;org.apache.hadoop.hive.hbase.HBaseStorageHandler&apos;
 WITH SERDEPROPERTIES (
@@ -629,7 +626,7 @@ WHERE foo=98 OR foo=100;
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#数据准备"><span class="nav-number">1.</span> <span class="nav-text">数据准备</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Hive中创建Hbase表"><span class="nav-number">2.</span> <span class="nav-text">Hive中创建Hbase表</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#数据准备"><span class="nav-number">1.</span> <span class="nav-text">数据准备</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Hive中创建Hbase表"><span class="nav-number">2.</span> <span class="nav-text">Hive中创建Hbase表</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Hive映射Hbase多列族多列"><span class="nav-number">3.</span> <span class="nav-text">Hive映射Hbase多列族多列</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Hive访问已存在的hbase表"><span class="nav-number">4.</span> <span class="nav-text">Hive访问已存在的hbase表</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Hive映射Hbase动态列"><span class="nav-number">5.</span> <span class="nav-text">Hive映射Hbase动态列</span></a></li></ol></div>
             
 
           </div>
