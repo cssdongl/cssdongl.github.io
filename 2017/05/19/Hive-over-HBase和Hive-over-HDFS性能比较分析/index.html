@@ -74,7 +74,7 @@
 <link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="ETL,Hdfs,Kafka," />
+  <meta name="keywords" content="Hexo, NexT" />
 
 
 
@@ -92,17 +92,23 @@
 
 
 
-<meta name="description" content="迁移前地址:http://www.cnblogs.com/cssdongl/p/6077311.html 找时间总结整理了下数据从Kafka到Hdfs的一些pipeline，如下  Kafka -&amp;gt; Flume –&amp;gt; Hadoop Hdfs常用方案,基于配置,需要注意hdfs小文件性能等问题.GitHub地址:  https://github.com/apache/flume  Kaf">
-<meta name="keywords" content="ETL,Hdfs,Kafka">
+<meta name="description" content="转自:http://superlxw1234.iteye.com/blog/2008274 环境配置：hadoop-2.0.0-cdh4.3.0 (4 nodes, 24G mem/node)hbase-0.94.6-cdh4.3.0 (4 nodes,maxHeapMB=9973/node)hive-0.10.0-cdh4.3.0 查询性能比较query1:            select">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Kafka到Hdfs的数据Pipeline整理(原)">
-<meta property="og:url" content="http://yoursite.com/2017/05/17/Kafka到Hdfs的数据Pipeline整理/index.html">
+<meta property="og:title" content="Hive over HBase和Hive over HDFS性能比较分析(转)">
+<meta property="og:url" content="http://yoursite.com/2017/05/19/Hive-over-HBase和Hive-over-HDFS性能比较分析/index.html">
 <meta property="og:site_name" content="Syn良子的博客">
-<meta property="og:description" content="迁移前地址:http://www.cnblogs.com/cssdongl/p/6077311.html 找时间总结整理了下数据从Kafka到Hdfs的一些pipeline，如下  Kafka -&amp;gt; Flume –&amp;gt; Hadoop Hdfs常用方案,基于配置,需要注意hdfs小文件性能等问题.GitHub地址:  https://github.com/apache/flume  Kaf">
-<meta property="og:updated_time" content="2017-05-17T07:59:20.049Z">
+<meta property="og:description" content="转自:http://superlxw1234.iteye.com/blog/2008274 环境配置：hadoop-2.0.0-cdh4.3.0 (4 nodes, 24G mem/node)hbase-0.94.6-cdh4.3.0 (4 nodes,maxHeapMB=9973/node)hive-0.10.0-cdh4.3.0 查询性能比较query1:            select">
+<meta property="og:image" content="http://oq1iog0cp.bkt.clouddn.com/hivehbase1.jpg">
+<meta property="og:image" content="http://oq1iog0cp.bkt.clouddn.com/hivehbae2.jpg">
+<meta property="og:image" content="http://oq1iog0cp.bkt.clouddn.com/hivehbase3.jpg">
+<meta property="og:image" content="http://oq1iog0cp.bkt.clouddn.com/hivehbase4.jpg">
+<meta property="og:image" content="http://oq1iog0cp.bkt.clouddn.com/hivehbase5.jpg">
+<meta property="og:image" content="http://oq1iog0cp.bkt.clouddn.com/hivehbase6.jpg">
+<meta property="og:updated_time" content="2017-05-19T07:11:51.457Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Kafka到Hdfs的数据Pipeline整理(原)">
-<meta name="twitter:description" content="迁移前地址:http://www.cnblogs.com/cssdongl/p/6077311.html 找时间总结整理了下数据从Kafka到Hdfs的一些pipeline，如下  Kafka -&amp;gt; Flume –&amp;gt; Hadoop Hdfs常用方案,基于配置,需要注意hdfs小文件性能等问题.GitHub地址:  https://github.com/apache/flume  Kaf">
+<meta name="twitter:title" content="Hive over HBase和Hive over HDFS性能比较分析(转)">
+<meta name="twitter:description" content="转自:http://superlxw1234.iteye.com/blog/2008274 环境配置：hadoop-2.0.0-cdh4.3.0 (4 nodes, 24G mem/node)hbase-0.94.6-cdh4.3.0 (4 nodes,maxHeapMB=9973/node)hive-0.10.0-cdh4.3.0 查询性能比较query1:            select">
+<meta name="twitter:image" content="http://oq1iog0cp.bkt.clouddn.com/hivehbase1.jpg">
 
 
 
@@ -130,13 +136,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2017/05/17/Kafka到Hdfs的数据Pipeline整理/"/>
+  <link rel="canonical" href="http://yoursite.com/2017/05/19/Hive-over-HBase和Hive-over-HDFS性能比较分析/"/>
 
 
 
 
 
-  <title>Kafka到Hdfs的数据Pipeline整理(原) | Syn良子的博客</title>
+  <title>Hive over HBase和Hive over HDFS性能比较分析(转) | Syn良子的博客</title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -266,7 +272,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/05/17/Kafka到Hdfs的数据Pipeline整理/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/05/19/Hive-over-HBase和Hive-over-HDFS性能比较分析/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="cssdongl">
@@ -283,7 +289,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Kafka到Hdfs的数据Pipeline整理(原)</h1>
+          <h1 class="post-title" itemprop="name headline">Hive over HBase和Hive over HDFS性能比较分析(转)</h1>
         
 
         <div class="post-meta">
@@ -295,8 +301,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-05-17T15:55:29+08:00">
-                2017-05-17
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-05-19T14:59:36+08:00">
+                2017-05-19
               </time>
             
 
@@ -306,61 +312,6 @@
           </span>
 
           
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/ETL/" itemprop="url" rel="index">
-                    <span itemprop="name">ETL</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/ETL/Gobblin/" itemprop="url" rel="index">
-                    <span itemprop="name">Gobblin</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/ETL/Gobblin/Hadoop/" itemprop="url" rel="index">
-                    <span itemprop="name">Hadoop</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/ETL/Gobblin/Hadoop/Kafka/" itemprop="url" rel="index">
-                    <span itemprop="name">Kafka</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
 
           
             
@@ -369,7 +320,7 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a class="cloud-tie-join-count" href="/2017/05/17/Kafka到Hdfs的数据Pipeline整理/#comments" itemprop="discussionUrl">
+                <a class="cloud-tie-join-count" href="/2017/05/19/Hive-over-HBase和Hive-over-HDFS性能比较分析/#comments" itemprop="discussionUrl">
                   <span class="post-comments-count join-count" itemprop="commentCount"></span>
                 </a>
               </span>
@@ -378,7 +329,7 @@
 
           
           
-             <span id="/2017/05/17/Kafka到Hdfs的数据Pipeline整理/" class="leancloud_visitors" data-flag-title="Kafka到Hdfs的数据Pipeline整理(原)">
+             <span id="/2017/05/19/Hive-over-HBase和Hive-over-HDFS性能比较分析/" class="leancloud_visitors" data-flag-title="Hive over HBase和Hive over HDFS性能比较分析(转)">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -406,21 +357,54 @@
       
 
       
-        <p>迁移前地址:<a href="http://www.cnblogs.com/cssdongl/p/6077311.html" target="_blank" rel="external">http://www.cnblogs.com/cssdongl/p/6077311.html</a></p>
-<p>找时间总结整理了下数据从Kafka到Hdfs的一些pipeline，如下</p>
+        <p>转自:<a href="http://superlxw1234.iteye.com/blog/2008274" target="_blank" rel="external">http://superlxw1234.iteye.com/blog/2008274</a></p>
+<p>环境配置：<br>hadoop-2.0.0-cdh4.3.0 (4 nodes, 24G mem/node)<br>hbase-0.94.6-cdh4.3.0 (4 nodes,maxHeapMB=9973/node)<br>hive-0.10.0-cdh4.3.0</p>
+<h1 id="查询性能比较"><a href="#查询性能比较" class="headerlink" title="查询性能比较"></a>查询性能比较</h1><p>query1:<br>            select count(1) from on_hdfs;<br>            select count(1) from on_hbase;<br>query2(根据key过滤)<br>            select <em> from on_hdfs<br>                where key = ‘13400000064_1388056783_460095106148962’;<br>            select </em> from on_hbase<br>                where key = ‘13400000064_1388056783_460095106148962’;<br>        query3(根据value过滤)<br>            select <em> from on_hdfs where value = ‘XXX’;<br>            select </em> from on_hbase where value = ‘XXX’;</p>
+<p> on_hdfs (20万记录，150M，TextFile on HDFS)<br>on_hbase(20万记录，160M，HFile on HDFS)</p>
+<p><img src="http://oq1iog0cp.bkt.clouddn.com/hivehbase1.jpg" alt=""></p>
+<p> on_hdfs (2500万记录，2.7G，TextFile on HDFS)<br> on_hbase(2500万记录，3G，HFile on HDFS)</p>
+<p><img src="http://oq1iog0cp.bkt.clouddn.com/hivehbae2.jpg" alt=""></p>
+<p>从上图可以看出，</p>
 <ul>
-<li><p>Kafka -&gt; Flume –&gt; Hadoop Hdfs<br>常用方案,基于配置,需要注意hdfs小文件性能等问题.<br>GitHub地址:  <a href="https://github.com/apache/flume" target="_blank" rel="external">https://github.com/apache/flume</a></p>
-</li>
-<li><p>Kafka -&gt; Kafka Hadoop Loader -&gt;Hadoop Hdfs<br>Kafka Hadoop Loader通过为kafka Topic下每个分区建立对应的split来创建task实现增量的加载数据流到hdfs,上次消费的partition offset是通过zookeeper来记录的.简单易用.<br>GitHub地址: <a href="https://github.com/michal-harish/kafka-hadoop-loader" target="_blank" rel="external"> https://github.com/michal-harish/kafka-hadoop-loader</a></p>
-</li>
-<li><p>Kafka -&gt; KaBoom -&gt; Hadoop Hdfs<br>KaBoom是一个借助Krackle(开源的kafka客户端，能极大的减少对象的创建，提高应用程序的性能)来消费kafka的Topic分区数据随后写如hdfs,利用Curator和Zookeeper来实现分布式服务,能够灵活的根据topic来写入不同的hdfs目录.<br>GitHub地址:  <a href="https://github.com/blackberry/KaBoom" target="_blank" rel="external">https://github.com/blackberry/KaBoom</a></p>
-</li>
-<li><p>Kafka -&gt; Kafka-connect-hdfs -&gt; Hadoop Hdfs<br>Confluent的Kafka Connect旨在通过标准化如何将数据移入和移出Kafka来简化构建大规模实时数据管道的过程。可以使用Kafka Connect读取或写入外部系统，管理数据流并扩展系统，而无需编写新代码.<br>GitHub地址: <a href="https://github.com/confluentinc/kafka-connect-hdfs" target="_blank" rel="external">https://github.com/confluentinc/kafka-connect-hdfs</a></p>
-</li>
-<li><p>Kafka -&gt; Gobblin -&gt; Hadoop Hdfs<br>Gobblin是LinkedIn开源的一个数据摄取组件.它支持多种数据源的摄取，通过并发的多任务进行数据抽取，转换，清洗，最终加载到目标数据源.支持单机和Hadoop MR二种方式，而且开箱即用，并支持很好的扩展和二次开发.<br>GitHub地址:  <a href="https://github.com/linkedin/gobblin" target="_blank" rel="external">https://github.com/linkedin/gobblin</a></p>
+<li>对于全表扫描，hive_on_hbase查询时候如果不设置catching，性能远远不及hive_on_hdfs；</li>
+<li>根据rowkey过滤，hive_on_hbase性能上略好于hive_on_hdfs，特别是数据量大的时候；</li>
+<li>设置了caching之后，尽管比不设caching好很多，但还是略逊于hive_on_hdfs；</li>
+</ul>
+<h1 id="Hive-over-HBase原理"><a href="#Hive-over-HBase原理" class="headerlink" title="Hive over HBase原理"></a>Hive over HBase原理</h1><p>Hive与HBase利用两者本身对外的API来实现整合，主要是靠HBaseStorageHandler进行通信，利用HBaseStorageHandler，Hive可以获取到Hive表对应的HBase表名，列簇以及列，InputFormat和OutputFormat类，创建和删除HBase表等。</p>
+<p>Hive访问HBase中表数据，实质上是通过MapReduce读取HBase表数据，其实现是在MR中，使用HiveHBaseTableInputFormat完成对HBase表的切分，获取RecordReader对象来读取数据。</p>
+<p>对HBase表的切分原则是一个Region切分成一个Split,即表中有多少个Regions,MR中就有多少个Map；读取HBase表数据都是通过构建Scanner，对表进行全表扫描，如果有过滤条件，则转化为Filter。当过滤条件为rowkey时，则转化为对rowkey的过滤；Scanner通过RPC调用RegionServer的next()来获取数据；</p>
+<h1 id="性能瓶颈分析"><a href="#性能瓶颈分析" class="headerlink" title="性能瓶颈分析"></a>性能瓶颈分析</h1><ul>
+<li>Map Task<ul>
+<li>Hive读取HBase表，通过MR,最终使用HiveHBaseTableInputFormat来读取数据，在getSplit()方法中对HBase表进行切分，切分原则是根据该表对应的HRegion，将每一个Region作为一个InputSplit，即，该表有多少个Region,就有多少个Map Task；</li>
+<li>每个Region的大小由参数hbase.hregion.max.filesize控制，默认10G，这样会使得每个map task处理的数据文件太大，map task性能自然很差；</li>
+<li>为HBase表预分配Region，使得每个Region的大小在合理的范围；</li>
+</ul>
 </li>
 </ul>
-<p>参考资料:<br><a href="https://www.confluent.io/blog/how-to-build-a-scalable-etl-pipeline-with-kafka-connect" target="_blank" rel="external">https://www.confluent.io/blog/how-to-build-a-scalable-etl-pipeline-with-kafka-connect</a><br><a href="http://gobblin.readthedocs.io/en/latest/Getting-Started/" target="_blank" rel="external">http://gobblin.readthedocs.io/en/latest/Getting-Started/</a><br><a href="http://gobblin.readthedocs.io/en/latest/case-studies/Kafka-HDFS-Ingestion/" target="_blank" rel="external">http://gobblin.readthedocs.io/en/latest/case-studies/Kafka-HDFS-Ingestion/</a><br><a href="https://github.com/confluentinc/kafka-connect-blog" target="_blank" rel="external">https://github.com/confluentinc/kafka-connect-blog</a><br><a href="http://docs.confluent.io/3.1.1/connect/connect-hdfs/docs/index.html" target="_blank" rel="external">http://docs.confluent.io/3.1.1/connect/connect-hdfs/docs/index.html</a></p>
+<p>下图是给该表预分配了15个Region，并且控制key均匀分布在每个Region上之后，查询的耗时对比，其本质上是Map数增加。</p>
+<p><img src="http://oq1iog0cp.bkt.clouddn.com/hivehbase3.jpg" alt=""></p>
+<ul>
+<li>Scan RPC 调用<ul>
+<li>Scan中的每一次next()方法都会为每一行数据生成一个单独的RPC请求， query1和query3中，全表有2500万行记录，因此要2500万次RPC请求；</li>
+<li>扫描器缓存（Scanner Caching）：HBase为扫描器提供了缓存的功能，可以通过参数hbase.client.scanner.caching来设置；默认是1；缓存的原理是通过设置一个缓存的行数，当客户端通过RPC请求RegionServer获取数据时，RegionServer先将数据缓存到内存，当缓存的数据行数达到参数设置的数量时，再一起返回给客户端。这样，通过设置扫描器缓存，就可以大幅度减少客户端RPC调用RegionServer的次数；但并不是缓存设置的越大越好，如果设置的太大，每一次RPC调用将会占用更长的时间，因为要获取更多的数据并传输到客户端，如果返回给客户端的数据超出了其堆的大小，程序就会终止并跑出OOM异常；</li>
+</ul>
+</li>
+</ul>
+<p>所以，需要为少量的RPC请求次数和客户端以及服务端的内存消耗找到平衡点。<br>rpc.metrics.next_num_ops<br>未设置caching,每个RegionServer上通过next()方法调用RPC的次数峰值达到1000万：</p>
+<p><img src="http://oq1iog0cp.bkt.clouddn.com/hivehbase4.jpg" alt=""></p>
+<p>设置了caching=2000，每个RegionServer上通过next()方法调用RPC的次数峰值只有4000：</p>
+<p><img src="http://oq1iog0cp.bkt.clouddn.com/hivehbase5.jpg" alt=""></p>
+<p>设置了caching之后，几个RegionServer上的内存消耗明显增加：</p>
+<p><img src="http://oq1iog0cp.bkt.clouddn.com/hivehbase6.jpg" alt=""></p>
+<p>扫描器批量（Scanner Batch）：缓存是面向行一级的操作，而批量则是面向列一级的操作。批量可以控制每一次next()操作要取回多少列。比如，在扫描器中设置setBatch(5),则一次next()返回的Result实例会包括5列。</p>
+<p>RPC请求次数的计算公式如下：<br>RPC请求次数 = （表行数 * 每行的列数）/ Min(每行的列数，批量大小)  / 扫描器缓存</p>
+<p>因此，在使用Hive over HBase，对HBase中的表做统计分析时候，需要特别注意以下几个方面：</p>
+<ol>
+<li>对HBase表进行预分配Region，根据表的数据量估算出一个合理的Region数；</li>
+<li>rowkey设计上需要注意，尽量使rowkey均匀分布在预分配的N个Region上；</li>
+<li>通过set hbase.client.scanner.caching设置合理的扫描器缓存；</li>
+<li>关闭mapreduce的推测执行：<br>set mapred.map.tasks.speculative.execution = false;<br>set mapred.reduce.tasks.speculative.execution = false;</li>
+</ol>
 
       
     </div>
@@ -448,16 +432,6 @@
 
     <footer class="post-footer">
       
-        <div class="post-tags">
-          
-            <a href="/tags/ETL/" rel="tag"># ETL</a>
-          
-            <a href="/tags/Hdfs/" rel="tag"># Hdfs</a>
-          
-            <a href="/tags/Kafka/" rel="tag"># Kafka</a>
-          
-        </div>
-      
 
       
         
@@ -467,8 +441,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/05/17/HiveHbase集成实践/" rel="next" title="HiveHbase集成实践(原)">
-                <i class="fa fa-chevron-left"></i> HiveHbase集成实践(原)
+              <a href="/2017/05/17/Hive读取外表数据时跳过文件行首和行尾/" rel="next" title="Hive读取外表数据时跳过文件行首和行尾(原)">
+                <i class="fa fa-chevron-left"></i> Hive读取外表数据时跳过文件行首和行尾(原)
               </a>
             
           </div>
@@ -476,10 +450,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/05/17/Hive读取外表数据时跳过文件行首和行尾/" rel="prev" title="Hive读取外表数据时跳过文件行首和行尾(原)">
-                Hive读取外表数据时跳过文件行首和行尾(原) <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -528,8 +498,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="http://oq1iog0cp.bkt.clouddn.com/shiwanyin.jpg"
@@ -618,6 +597,22 @@
 
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#查询性能比较"><span class="nav-number">1.</span> <span class="nav-text">查询性能比较</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Hive-over-HBase原理"><span class="nav-number">2.</span> <span class="nav-text">Hive over HBase原理</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#性能瓶颈分析"><span class="nav-number">3.</span> <span class="nav-text">性能瓶颈分析</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       

@@ -263,6 +263,140 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/05/19/Hive-over-HBase和Hive-over-HDFS性能比较分析/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="cssdongl">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://oq1iog0cp.bkt.clouddn.com/shiwanyin.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Syn良子的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/05/19/Hive-over-HBase和Hive-over-HDFS性能比较分析/" itemprop="url">Hive over HBase和Hive over HDFS性能比较分析(转)</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-05-19T14:59:36+08:00">
+                2017-05-19
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2017/05/19/Hive-over-HBase和Hive-over-HDFS性能比较分析/" class="leancloud_visitors" data-flag-title="Hive over HBase和Hive over HDFS性能比较分析(转)">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+          转自:http://superlxw1234.iteye.com/blog/2008274
+环境配置：hadoop-2.0.0-cdh4.3.0 (4 nodes, 24G mem/node)hbase-0.94.6-cdh4.3.0 (4 nodes,maxHeapMB=9973/node)hive-0.10.0-cdh4.3.0
+查询性能比较query1:            select count(1) from on_hdfs;            select count(1) from on_hbase;query2(根据key过滤)            select  from on_hdfs                where key = ‘13400000064_1388056783_460095106148962’;            select  from on_hbase                where key = ‘13400000064_1388056783_460095106148962’;        query3(根据value过滤)            select  from on_hdfs where value = ‘XXX’;            select  from on_hbase where value = ‘XXX’;
+ on_hdfs (20万记录，150M，TextFile on HDFS)on_hbase(20万记录，160M，HFile on HDFS)
+
+ on_hdfs (2
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/05/19/Hive-over-HBase和Hive-over-HDFS性能比较分析/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/05/17/Hive读取外表数据时跳过文件行首和行尾/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1798,182 +1932,11 @@ scala.coll
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/05/17/MapReduce和Spark写入Hbase多表总结/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="cssdongl">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="http://oq1iog0cp.bkt.clouddn.com/shiwanyin.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Syn良子的博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/05/17/MapReduce和Spark写入Hbase多表总结/" itemprop="url">MapReduce和Spark写入Hbase多表总结(原)</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-05-17T14:55:33+08:00">
-                2017-05-17
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Hbase/" itemprop="url" rel="index">
-                    <span itemprop="name">Hbase</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Hbase/Spark/" itemprop="url" rel="index">
-                    <span itemprop="name">Spark</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2017/05/17/MapReduce和Spark写入Hbase多表总结/" class="leancloud_visitors" data-flag-title="MapReduce和Spark写入Hbase多表总结(原)">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数 </span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-          迁移前地址:http://www.cnblogs.com/cssdongl/p/6227195.html
-大家都知道用mapreduce或者spark写入已知的hbase中的表时，直接在mapreduce或者spark的driver class中声明如下代码
-job.getConfiguration().set(TableOutputFormat.OUTPUT_TABLE, tablename);
-随后mapreduce在mapper或者reducer中直接context写入即可,而spark则是构造好包含Put的PairRDDFunctions后saveAsHadoopDataset即可.而经常会碰到一些要求是根据输入数据，处理后需要写入hbase多个表或者表名是未知的，需要按照数据中某个字段来构造表名写入hbase.由于表名未知，所以不能设置TableOutputFormat.OUTPUT_TABLE,那么这种要求也容易实现，分别总结mapreduce和spark的实现方法(其实到最后会发现殊途同归)
-#MapReduce写入Hbase多表#在MR的main方法中加入如下代码即可
-job.setOutputFormatClass(MultiTableOutputFormat.class);
-随后就可以在mapper或者reducer的context中根据相关字段构造表名和put写入多个hbase表.
-#Spark写入Hbase多表#
-这里直接用我测试过的spark streaming程序写入多个hbase表，上代码
-object SparkStreamingWriteToH
-          ...
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/05/17/MapReduce和Spark写入Hbase多表总结/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right"></i></a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -2018,7 +1981,7 @@ object SparkStreamingWriteToH
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">20</span>
+                <span class="site-state-item-count">21</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
